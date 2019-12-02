@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/Static/style.css">
+<link rel="stylesheet" href="/static/css/style.css">
 </head>
 
-<h2>Responsive Table with Bootstrap</h2>
+<h2>Current NBA Wins League Standings</h2>
 
         <table summary="This table shows how to create responsive tables using Bootstrap's default functionality" class="table table-bordered table-hover">
           <caption class="text-center">Current Standings</caption>
@@ -23,7 +23,6 @@
               <th>Team 4 Record</th>
             </tr>
           </thead>
-          <tbody>
             <tr>
               {% for i in range(0, 11)%}
               
@@ -72,8 +71,6 @@
                 <td>{{team7_data[i]}}</td>
               {% endfor %}
             </tr>
-
-          </tbody>
           <tfoot>
             <tr>
               <td colspan="5" class="text-center">Data retrieved from <a href="http://www.infoplease.com/ipa/A0855611.html" target="_blank">infoplease</a> and <a href="http://www.worldometers.info/world-population/population-by-country/" target="_blank">worldometers</a>.</td>
