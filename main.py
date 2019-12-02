@@ -41,7 +41,7 @@ def home():
 	                                    "Benjamin Bogdanovic"],
 	                      'Owner': ['Nebeyu', 'Phil', 'Fitz', 'Cepehr', 'Gabe', 'Young', 'Ben'],
 	                      'Team 1': ['Bucks','76ers', 'Clippers','Rockets','Nuggets', 'Lakers', 'Celtics'],
-	                      'Team 2': ['Spurs', 'Blazers', 'Nets', 'Pacers', 'Raptors', 'Warriors', 'Jazz'],
+	                      'Team 2': ['Spurs', 'Trail Blazers', 'Nets', 'Pacers', 'Raptors', 'Warriors', 'Jazz'],
 	                      'Team 3': ['Heat', 'Mavericks', 'Magic', 'Pelicans', 'Timberwolves','Pistons', 'Hawks'],
 	                      'Team 4': ['Grizzlies', 'Knicks', 'Wizards', 'Suns', 'Thunder', 'Bulls', 'Kings']})
 
@@ -66,7 +66,27 @@ def home():
 	                           'Team 3', 'Team 3 Wins', 'Team 4', 'PreAS']]
 	merged_wins = merged_wins.rename(columns= {"PreAS": "Team 4 Wins"})
 
-	return render_template('simple.html',  tables=[merged_wins.to_html(classes='data')], titles=merged_wins.columns.values)
+	merged_wins['Total Wins'] = merged_wins['Team 1 Wins'].str.extract('(.*)[-]').astype(int) \
+	+ merged_wins['Team 2 Wins'].str.extract('(.*)[-]').astype(int) \
+	+ merged_wins['Team 3 Wins'].str.extract('(.*)[-]').astype(int) \
+	+ merged_wins['Team 4 Wins'].str.extract('(.*)[-]').astype(int) 
+
+	cols = merged_wins.columns.tolist()
+	cols.insert(2, cols.pop(cols.index('Total Wins')))
+	merged_wins = merged_wins.reindex(columns= cols)
+
+	merged_wins = merged_wins.sort_values(by=['Total Wins'], ascending = False)
+	merged_wins.reset_index(drop=True, inplace=True)
+
+
+
+	return render_template('responsive_table.html',  team1_data = merged_wins.iloc[0].values,
+	 									   team2_data = merged_wins.iloc[1].values,
+	                                       team3_data = merged_wins.iloc[2].values, 
+	                                       team4_data = merged_wins.iloc[3].values,
+	                                       team5_data = merged_wins.iloc[4].values, 
+	                                       team6_data = merged_wins.iloc[5].values,
+	                                       team7_data = merged_wins.iloc[6].values,)
 
 
 if __name__ == "__main__":

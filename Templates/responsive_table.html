@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/Static/style.css">
+</head>
+
+<h2>Responsive Table with Bootstrap</h2>
+
+        <table summary="This table shows how to create responsive tables using Bootstrap's default functionality" class="table table-bordered table-hover">
+          <caption class="text-center">Current Standings</caption>
+          <thead>
+            <tr>
+              <th>Team Name</th>
+              <th>Owner</th>
+              <th>Total Wins</th>
+              <th>Team 1</th>
+              <th>Team 1 Record</th>
+              <th>Team 2</th>
+              <th>Team 2 Record</th>
+              <th>Team 3</th>
+              <th>Team 3 Record</th>
+              <th>Team 4</th>
+              <th>Team 4 Record</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% for i in range(0, 11)%}
+              
+                <td>{{team1_data[i]}}</td>
+              {% endfor %}
+            </tr>
+
+            <tr>
+              {% for i in range(0, 11)%}
+              
+                <td>{{team2_data[i]}}</td>
+              {% endfor %}
+            </tr>
+
+            <tr>
+              {% for i in range(0, 11)%}
+              
+                <td>{{team3_data[i]}}</td>
+              {% endfor %}
+            </tr>
+
+            <tr>
+              {% for i in range(0, 11)%}
+              
+                <td>{{team4_data[i]}}</td>
+              {% endfor %}
+            </tr>
+
+            <tr>
+              {% for i in range(0, 11)%}
+              
+                <td>{{team5_data[i]}}</td>
+              {% endfor %}
+            </tr>
+
+            <tr>
+              {% for i in range(0, 11)%}
+              
+                <td>{{team6_data[i]}}</td>
+              {% endfor %}
+            </tr>
+
+            <tr>
+              {% for i in range(0, 11)%}
+              
+                <td>{{team7_data[i]}}</td>
+              {% endfor %}
+            </tr>
+
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="text-center">Data retrieved from <a href="http://www.infoplease.com/ipa/A0855611.html" target="_blank">infoplease</a> and <a href="http://www.worldometers.info/world-population/population-by-country/" target="_blank">worldometers</a>.</td>
+            </tr>
+          </tfoot>
+        </table>
+
+<p class="p">Demo by Gabe Solomon. <a href="http://www.sitepoint.com/responsive-data-tables-comprehensive-list-solutions" target="_blank">See article</a>.</p>
+</html>
+
