@@ -20,15 +20,21 @@
               <th>Team 3 Record</th>
               <th>Team 4</th>
               <th>Team 4 Record</th>
-              <th>Image</th>
             </tr>
           </thead>
             <tr>
-              {% for i in range(0, 11)%}
-              
+              {% for i in range(0, 2)%}
                 <td>{{team1_data[i]}}</td>
               {% endfor %}
-              <td><img src="https://www.stickpng.com/assets/thumbs/58419be4a6515b1e0ad75a58.png" alt="" height=100 width=100></img>
+              <td><img src="{{team1_data[3]}}" alt="" height=100 width=100></img></td>
+              <td>{{team1_data[4]}}</td>
+              <td><img src="{{team1_data[5]}}" alt="" height=100 width=100></img></td>
+              <td>{{team1_data[6]}}</td>
+              <td><img src="{{team1_data[7]}}" alt="" height=100 width=100></img></td>
+              <td>{{team1_data[8]}}</td>
+              <td><img src="{{team1_data[9]}}" alt="" height=100 width=100></img></td>
+              <td>{{team1_data[10]}}</td>
+
             </tr>
 
             <tr>

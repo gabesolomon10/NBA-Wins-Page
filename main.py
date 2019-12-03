@@ -88,11 +88,6 @@ def home():
 	merged_wins = merged_wins.sort_values(by=['Total Wins'], ascending = False)
 	merged_wins.reset_index(drop=True, inplace=True)
 
-	#NBA Logos
-
-
-
-
 	return render_template('responsive_table.html',  team1_data = merged_wins.iloc[0].values,
 	 									   team2_data = merged_wins.iloc[1].values,
 	                                       team3_data = merged_wins.iloc[2].values, 
