@@ -75,8 +75,21 @@ def home():
 	cols.insert(2, cols.pop(cols.index('Total Wins')))
 	merged_wins = merged_wins.reindex(columns= cols)
 
+	#NBA Logos
+	merged_wins['Team 1 Image'] = ['bucks.png', '76ers.png', 'clippers.png',
+								   'rockets.png', 'nuggets.png', 'lakers.png', 'celtics.png']
+	merged_wins['Team 2 Image'] = ['spurs.jpg', 'trail_blazers.jpg', 'nets.jpg',
+								   'pacers.jpg', 'raptors.png', 'warriors.png', 'jazz.png']
+	merged_wins['Team 3 Image'] = ['heat.png', 'mavericks.png', 'magic.png', 'pelicans.png',
+								   'timberwolves.png', 'pistons.png','hawks.png']
+	merged_wins['Team 4 Image'] = ['grizzlies.png', 'knicks.png', 'wizards.png', 'suns.png',
+								   'thunder.png', 'bulls.png','kings.png']
+
 	merged_wins = merged_wins.sort_values(by=['Total Wins'], ascending = False)
 	merged_wins.reset_index(drop=True, inplace=True)
+
+	#NBA Logos
+
 
 
 
