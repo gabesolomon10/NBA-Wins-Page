@@ -2,7 +2,6 @@ body {
   font-family: "Open Sans", sans-serif;
   line-height: 1.25;
   background-image: url("https://miro.medium.com/max/3624/1*C02wNydKS3IFId-orsyN3A.jpeg");
-  background-color: #cccccc;
 }
 
 table {
@@ -10,17 +9,15 @@ table {
   border-collapse: collapse;
   margin: 0;
   padding: 0;
-  width: 80%;
+  width: 100%;
   table-layout: fixed;
-  opacity: 0.7;
+  opacity: 0.93;
 }
 
 table caption {
   font-size: 1.5em;
   margin: .5em 0 .75em;
 }
-
-
 
 table tr {
   background-color: #f8f8f8;
