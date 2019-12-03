@@ -6,7 +6,7 @@
 <body>
 
         <table>
-          <caption class="text-center">Current Standings</caption>
+          <caption class="text-center" style="color:white" text-shadow: white 0px 0px 10px;>Current Standings </caption>
           <thead>
             <tr>
               <th>Team Name</th>
@@ -22,68 +22,120 @@
               <th>Team 4 Record</th>
             </tr>
           </thead>
+
             <tr>
-              {% for i in range(0, 2)%}
+
+              {% for i in range(0, 3)%}
                 <td>{{team1_data[i]}}</td>
               {% endfor %}
-              <td><img src="{{team1_data[3]}}" alt="" height=100 width=100></img></td>
+              <td><img src="{{team1_data[11]}}" alt="" height=100 width=100></img></td>
               <td>{{team1_data[4]}}</td>
-              <td><img src="{{team1_data[5]}}" alt="" height=100 width=100></img></td>
+              <td><img src="{{team1_data[12]}}" alt="" height=100 width=100></img></td>
               <td>{{team1_data[6]}}</td>
-              <td><img src="{{team1_data[7]}}" alt="" height=100 width=100></img></td>
+              <td><img src="{{team1_data[13]}}" alt="" height=100 width=100></img></td>
               <td>{{team1_data[8]}}</td>
-              <td><img src="{{team1_data[9]}}" alt="" height=100 width=100></img></td>
+              <td><img src="{{team1_data[14]}}" alt="" height=100 width=100></img></td>
               <td>{{team1_data[10]}}</td>
 
             </tr>
 
-            <tr>
-              {% for i in range(0, 11)%}
+             <tr>
               
+              {% for i in range(0, 3)%}
                 <td>{{team2_data[i]}}</td>
               {% endfor %}
-              <td><img src="https://www.stickpng.com/assets/thumbs/58419be4a6515b1e0ad75a58.png" alt="" height=100 width=100></img>
+              <td><img src="{{team2_data[11]}}" alt="" height=100 width=100></img></td>
+              <td>{{team2_data[4]}}</td>
+              <td><img src="{{team2_data[12]}}" alt="" height=100 width=100></img></td>
+              <td>{{team2_data[6]}}</td>
+              <td><img src="{{team2_data[13]}}" alt="" height=100 width=100></img></td>
+              <td>{{team2_data[8]}}</td>
+              <td><img src="{{team2_data[14]}}" alt="" height=100 width=100></img></td>
+              <td>{{team2_data[10]}}</td>
+
             </tr>
 
-            <tr>
-              {% for i in range(0, 11)%}
+             <tr>
               
+              {% for i in range(0, 3)%}
                 <td>{{team3_data[i]}}</td>
               {% endfor %}
-              <td><img src="https://www.stickpng.com/assets/thumbs/58419be4a6515b1e0ad75a58.png" alt="" height=100 width=100></img>
+              <td><img src="{{team3_data[11]}}" alt="" height=100 width=100></img></td>
+              <td>{{team3_data[4]}}</td>
+              <td><img src="{{team3_data[12]}}" alt="" height=100 width=100></img></td>
+              <td>{{team3_data[6]}}</td>
+              <td><img src="{{team3_data[13]}}" alt="" height=100 width=100></img></td>
+              <td>{{team3_data[8]}}</td>
+              <td><img src="{{team3_data[14]}}" alt="" height=100 width=100></img></td>
+              <td>{{team3_data[10]}}</td>
+
             </tr>
 
-            <tr>
-              {% for i in range(0, 11)%}
+             <tr>
               
+              {% for i in range(0, 3)%}
                 <td>{{team4_data[i]}}</td>
               {% endfor %}
-              <td><img src="https://www.stickpng.com/assets/thumbs/58419be4a6515b1e0ad75a58.png" alt="" height=100 width=100></img>
+              <td><img src="{{team4_data[11]}}" alt="" height=100 width=100></img></td>
+              <td>{{team4_data[4]}}</td>
+              <td><img src="{{team4_data[12]}}" alt="" height=100 width=100></img></td>
+              <td>{{team4_data[6]}}</td>
+              <td><img src="{{team4_data[13]}}" alt="" height=100 width=100></img></td>
+              <td>{{team4_data[8]}}</td>
+              <td><img src="{{team4_data[14]}}" alt="" height=100 width=100></img></td>
+              <td>{{team4_data[10]}}</td>
+
             </tr>
 
-            <tr>
-              {% for i in range(0, 11)%}
+             <tr>
               
+              {% for i in range(0, 3)%}
                 <td>{{team5_data[i]}}</td>
               {% endfor %}
-              <td><img src="https://www.stickpng.com/assets/thumbs/58419be4a6515b1e0ad75a58.png" alt="" height=100 width=100></img>
+              <td><img src="{{team5_data[11]}}" alt="" height=100 width=100></img></td>
+              <td>{{team5_data[4]}}</td>
+              <td><img src="{{team5_data[12]}}" alt="" height=100 width=100></img></td>
+              <td>{{team5_data[6]}}</td>
+              <td><img src="{{team5_data[13]}}" alt="" height=100 width=100></img></td>
+              <td>{{team5_data[8]}}</td>
+              <td><img src="{{team5_data[14]}}" alt="" height=100 width=100></img></td>
+              <td>{{team5_data[10]}}</td>
+
             </tr>
 
-            <tr>
-              {% for i in range(0, 11)%}
+             <tr>
               
+              {% for i in range(0, 3)%}
                 <td>{{team6_data[i]}}</td>
               {% endfor %}
-              <td><img src="https://www.stickpng.com/assets/thumbs/58419be4a6515b1e0ad75a58.png" alt="" height=100 width=100></img>
+              <td><img src="{{team6_data[11]}}" alt="" height=100 width=100></img></td>
+              <td>{{team6_data[4]}}</td>
+              <td><img src="{{team6_data[12]}}" alt="" height=100 width=100></img></td>
+              <td>{{team6_data[6]}}</td>
+              <td><img src="{{team6_data[13]}}" alt="" height=100 width=100></img></td>
+              <td>{{team6_data[8]}}</td>
+              <td><img src="{{team6_data[14]}}" alt="" height=100 width=100></img></td>
+              <td>{{team6_data[10]}}</td>
+
             </tr>
 
-            <tr>
-              {% for i in range(0, 11)%}
+             <tr>
               
+              {% for i in range(0, 3)%}
                 <td>{{team7_data[i]}}</td>
               {% endfor %}
-              <td><img src="https://www.stickpng.com/assets/thumbs/58419be4a6515b1e0ad75a58.png" alt="" height=100 width=100></img>
+              <td><img src="{{team7_data[11]}}" alt="" height=100 width=100></img></td>
+              <td>{{team7_data[4]}}</td>
+              <td><img src="{{team7_data[12]}}" alt="" height=100 width=100></img></td>
+              <td>{{team7_data[6]}}</td>
+              <td><img src="{{team7_data[13]}}" alt="" height=100 width=100></img></td>
+              <td>{{team7_data[8]}}</td>
+              <td><img src="{{team7_data[14]}}" alt="" height=100 width=100></img></td>
+              <td>{{team7_data[10]}}</td>
+
             </tr>
+
+            
           <tfoot>
             <tr>
               <td colspan="5" class="text-center">Data retrieved from <a href="https://pypi.org/project/nba-api/" target="_blank">NBA API</a>.</td>

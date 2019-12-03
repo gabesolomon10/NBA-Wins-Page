@@ -12,13 +12,17 @@ import pandas as pd
 import numpy as np
 import ast
 import wget
+import os
 
 from functools import reduce 
 from datetime import date, timedelta
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import leaguestandings
 
+logos_folder = os.path.join('static', 'nba_logos')
+
 app = Flask(__name__)
+app.config['nba_folder'] = logos_folder
 cache = Cache(app,config={'CACHE_TYPE': 'simple'})
 app.secret_key = 'a;sldks;js?##s;kasjjdfjd'
 
@@ -44,7 +48,6 @@ def home():
 	                      'Team 2': ['Spurs', 'Trail Blazers', 'Nets', 'Pacers', 'Raptors', 'Warriors', 'Jazz'],
 	                      'Team 3': ['Heat', 'Mavericks', 'Magic', 'Pelicans', 'Timberwolves','Pistons', 'Hawks'],
 	                      'Team 4': ['Grizzlies', 'Knicks', 'Wizards', 'Suns', 'Thunder', 'Bulls', 'Kings']})
-
 
 	#Create the wins table
 	merged_wins = teams.merge(standings_df, left_on = 'Team 1', right_on = 'TeamName')
@@ -76,14 +79,38 @@ def home():
 	merged_wins = merged_wins.reindex(columns= cols)
 
 	#NBA Logos
-	merged_wins['Team 1 Image'] = ['bucks.png', '76ers.png', 'clippers.png',
-								   'rockets.png', 'nuggets.png', 'lakers.png', 'celtics.png']
-	merged_wins['Team 2 Image'] = ['spurs.jpg', 'trail_blazers.jpg', 'nets.jpg',
-								   'pacers.jpg', 'raptors.png', 'warriors.png', 'jazz.png']
-	merged_wins['Team 3 Image'] = ['heat.png', 'mavericks.png', 'magic.png', 'pelicans.png',
-								   'timberwolves.png', 'pistons.png','hawks.png']
-	merged_wins['Team 4 Image'] = ['grizzlies.png', 'knicks.png', 'wizards.png', 'suns.png',
-								   'thunder.png', 'bulls.png','kings.png']
+
+	merged_wins['Team 1 Image'] = [os.path.join(app.config['nba_folder'],'bucks.png'),
+								   os.path.join(app.config['nba_folder'],'76ers.png'),
+								   os.path.join(app.config['nba_folder'],'clippers.png'),
+								   os.path.join(app.config['nba_folder'],'rockets.png'),
+								   os.path.join(app.config['nba_folder'],'nuggets.png'),
+								   os.path.join(app.config['nba_folder'],'lakers.png'),
+								   os.path.join(app.config['nba_folder'],'celtics.png')]
+
+	merged_wins['Team 2 Image'] = [os.path.join(app.config['nba_folder'],'spurs.png'),
+								   os.path.join(app.config['nba_folder'],'trail_blazers.png'),
+								   os.path.join(app.config['nba_folder'],'nets.png'),
+								   os.path.join(app.config['nba_folder'],'pacers.png'),
+								   os.path.join(app.config['nba_folder'],'raptors.png'),
+								   os.path.join(app.config['nba_folder'],'warriors.png'),
+								   os.path.join(app.config['nba_folder'],'jazz.png')]
+
+	merged_wins['Team 3 Image'] = [os.path.join(app.config['nba_folder'],'heat.png'),
+								   os.path.join(app.config['nba_folder'],'mavericks.png'),
+								   os.path.join(app.config['nba_folder'],'magic.png'),
+								   os.path.join(app.config['nba_folder'],'pelicans.png'),
+								   os.path.join(app.config['nba_folder'],'timberwolves.png'),
+								   os.path.join(app.config['nba_folder'],'pistons.png'),
+								   os.path.join(app.config['nba_folder'],'hawks.png')]
+
+	merged_wins['Team 4 Image'] = [os.path.join(app.config['nba_folder'],'grizzlies.png'),
+								   os.path.join(app.config['nba_folder'],'knicks.png'),
+								   os.path.join(app.config['nba_folder'],'wizards.png'),
+								   os.path.join(app.config['nba_folder'],'suns.png'),
+								   os.path.join(app.config['nba_folder'],'thunder.png'),
+								   os.path.join(app.config['nba_folder'],'bulls.png'),
+								   os.path.join(app.config['nba_folder'],'kings.png')]
 
 	merged_wins = merged_wins.sort_values(by=['Total Wins'], ascending = False)
 	merged_wins.reset_index(drop=True, inplace=True)
@@ -95,7 +122,6 @@ def home():
 	                                       team5_data = merged_wins.iloc[4].values, 
 	                                       team6_data = merged_wins.iloc[5].values,
 	                                       team7_data = merged_wins.iloc[6].values,)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
