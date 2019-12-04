@@ -10,7 +10,6 @@ import requests, time, sys, re, lxml, html5lib, scipy, openpyxl, os, functools
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-import ast
 import wget
 import os
 
