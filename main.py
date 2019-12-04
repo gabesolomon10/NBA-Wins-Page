@@ -6,14 +6,12 @@ from flaskext.mysql import MySQL
 from flask_caching import Cache
 
 # Other stuff
-import requests, time, sys, re, lxml, html5lib, scipy, openpyxl, os, functools
+import requests, time, sys, re, html5lib, scipy, openpyxl, os
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import wget
-import os
 
-from functools import reduce 
 from datetime import date, timedelta
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import leaguestandings
