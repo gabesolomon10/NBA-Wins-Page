@@ -29,7 +29,6 @@ cffi==1.12.3
 chardet==3.0.4
 Click==7.0
 cloudpickle==1.2.2
-clyent==1.2.2
 colorama==0.4.1
 conda==4.7.12
 conda-build==3.18.9
@@ -156,7 +155,6 @@ pyasn1-modules==0.2.7
 pycodestyle==2.5.0
 pycosat==0.6.3
 pycparser==2.19
-pycrypto==2.6.1
 pycurl==7.43.0.3
 pyflakes==2.1.1
 Pygments==2.4.2
