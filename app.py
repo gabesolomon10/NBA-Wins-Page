@@ -6,7 +6,7 @@ from flaskext.mysql import MySQL
 from flask_caching import Cache
 
 # Other stuff
-import requests, time, sys, re, html5lib, scipy, openpyxl, os
+import requests, time, re, html5lib, scipy, openpyxl, os
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
