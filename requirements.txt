@@ -6,6 +6,7 @@ DateTime==4.3
 et-xmlfile==1.0.1
 Flask==1.1.1
 Flask-Caching==1.8.0
+flask-mysql==1.4.0
 future==0.18.2
 idna==2.8
 itsdangerous==1.1.0
