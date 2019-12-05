@@ -1,6 +1,10 @@
 from __future__ import absolute_import, print_function
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flaskext.mysql import MySQL
+import requests
+from lxml.html import fromstring
+from itertools import cycle
+import traceback
 
 # caching imports
 from flask_caching import Cache
@@ -17,9 +21,12 @@ from nba_api.stats.static import teams
 from nba_api.stats.endpoints import leaguestandings
 
 logos_folder = os.path.join('static', 'nba_logos')
+pics_folder = os.path.join('static', 'profiles')
 
 app = Flask(__name__)
 app.config['nba_folder'] = logos_folder
+app.config['profiles_folder'] = pics_folder
+
 cache = Cache(app,config={'CACHE_TYPE': 'simple'})
 app.secret_key = 'a;sldks;js?##s;kasjjdfjd'
 
@@ -40,7 +47,13 @@ def home():
 	                                    "Pre-pubescent toddler",
 	                                    "Did it",
 	                                    "Benjamin Bogdanovic"],
-	                      'Owner': ['Nebeyu', 'Phil', 'Fitz', 'Cepehr', 'Gabe', 'Young', 'Ben'],
+	                      'Owner': [os.path.join(app.config['profiles_folder'],'nebeyu.png'),
+									os.path.join(app.config['profiles_folder'],'phil.png'),
+									os.path.join(app.config['profiles_folder'],'fitz.png'),
+									os.path.join(app.config['profiles_folder'],'cepehr.png'),
+									os.path.join(app.config['profiles_folder'],'gabe.png'),
+									os.path.join(app.config['profiles_folder'],'young.png'),
+									os.path.join(app.config['profiles_folder'],'ben.png')],
 	                      'Team 1': ['Bucks','76ers', 'Clippers','Rockets','Nuggets', 'Lakers', 'Celtics'],
 	                      'Team 2': ['Spurs', 'Trail Blazers', 'Nets', 'Pacers', 'Raptors', 'Warriors', 'Jazz'],
 	                      'Team 3': ['Heat', 'Mavericks', 'Magic', 'Pelicans', 'Timberwolves','Pistons', 'Hawks'],
