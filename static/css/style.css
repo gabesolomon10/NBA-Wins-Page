@@ -1,5 +1,5 @@
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Futura", sans-serif;
   line-height: 1.25;
   background-image: url("https://miro.medium.com/max/3624/1*C02wNydKS3IFId-orsyN3A.jpeg");
 }
@@ -25,6 +25,7 @@ table caption {
 table tr {
   background-color: #f8f8f8;
   border: 1px solid #ddd;
+  font-size: 24px;
   padding: .7em;
 }
 

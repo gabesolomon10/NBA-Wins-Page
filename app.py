@@ -82,10 +82,18 @@ def home():
 	merged_wins['Total Wins'] = merged_wins['Team 1 Wins'].str.extract('(.*)[-]').astype(int) \
 	+ merged_wins['Team 2 Wins'].str.extract('(.*)[-]').astype(int) \
 	+ merged_wins['Team 3 Wins'].str.extract('(.*)[-]').astype(int) \
-	+ merged_wins['Team 4 Wins'].str.extract('(.*)[-]').astype(int) 
+	+ merged_wins['Team 4 Wins'].str.extract('(.*)[-]').astype(int)
+
+	merged_wins['Total Losses'] = merged_wins['Team 1 Wins'].str.extract('[-](.*)').astype(int) \
+	+ merged_wins['Team 2 Wins'].str.extract('[-](.*)').astype(int) \
+	+ merged_wins['Team 3 Wins'].str.extract('[-](.*)').astype(int) \
+	+ merged_wins['Team 4 Wins'].str.extract('[-](.*)').astype(int)
+
+	merged_wins['Win Percentage'] = round(merged_wins['Total Wins']/(merged_wins['Total Wins']+merged_wins['Total Losses']),3)
 
 	cols = merged_wins.columns.tolist()
 	cols.insert(2, cols.pop(cols.index('Total Wins')))
+	cols.insert(3, cols.pop(cols.index('Win Percentage')))
 	merged_wins = merged_wins.reindex(columns= cols)
 
 	#NBA Logos
