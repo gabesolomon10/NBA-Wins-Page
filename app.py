@@ -2,7 +2,6 @@ from __future__ import absolute_import, print_function
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flaskext.mysql import MySQL
 import requests
-from lxml.html import fromstring
 from itertools import cycle
 import traceback
 
