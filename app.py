@@ -1,21 +1,16 @@
-from __future__ import absolute_import, print_function
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flaskext.mysql import MySQL
 import requests
-from itertools import cycle
-import traceback
 
 # caching imports
 from flask_caching import Cache
 
 # Other stuff
-import requests, time, re, html5lib, scipy, openpyxl, os
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import wget
 
-from datetime import date, timedelta
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import leaguestandings
 
