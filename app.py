@@ -13,8 +13,6 @@ import numpy as np
 import wget
 import os
 
-from nba_api.stats.static import teams
-from nba_api.stats.endpoints import leaguestandings
 
 logos_folder = os.path.join('static', 'nba_logos')
 pics_folder = os.path.join('static', 'profiles')
@@ -52,6 +50,7 @@ def home():
 
 	#Add necessary columns to standings
 	standings_df = western_conf_df.append(eastern_conf_df)
+	
 	standings_df['Team'] = standings_df['Team'].str.extract('(.*)[(]')
 	standings_df['Team'] = standings_df['Team'].astype(str)
 	standings_df['Team'] = standings_df['Team'].str.strip()
@@ -73,10 +72,14 @@ def home():
 									os.path.join(app.config['profiles_folder'],'gabe.png'),
 									os.path.join(app.config['profiles_folder'],'young.png'),
 									os.path.join(app.config['profiles_folder'],'ben.png')],
-	                      'Team 1': ['Bucks','76ers', 'Clippers','Rockets','Nuggets', 'Lakers', 'Celtics'],
-	                      'Team 2': ['Spurs', 'Trail Blazers', 'Nets', 'Pacers', 'Raptors', 'Warriors', 'Jazz'],
-	                      'Team 3': ['Heat', 'Mavericks', 'Magic', 'Pelicans', 'Timberwolves','Pistons', 'Hawks'],
-	                      'Team 4': ['Grizzlies', 'Knicks', 'Wizards', 'Suns', 'Thunder', 'Bulls', 'Kings']})
+	                      'Team 1': ['Milwaukee Bucks','Philadelphia 76ers', 'Los Angeles Clippers',
+                                     'Houston Rockets','Denver Nuggets', 'Los Angeles Lakers', ' Boston Celtics'],
+	                      'Team 2': ['San Antonio Spurs', 'Portland Trail Blazers', 'Brooklyn Nets',
+                                     'Indiana Pacers', 'Toronto Raptors', 'Golden State Warriors', 'Utah Jazz'],
+	                      'Team 3': ['Miami Heat', 'Dallas Mavericks', 'Orlando Magic',
+                                     'New Orleans Pelicans', 'Minnesota Timberwolves','Detroit Pistons', 'Atlanta Hawks'],
+	                      'Team 4': ['Memphis Grizzlies', 'New York Knicks', 'Washington Wizards', 'Phoenix Suns',
+                                     'Oklahoma City Thunder', 'Chicago Bulls', 'Sacramento Kings']})
 
 	#Create the wins table
 	merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
@@ -114,7 +117,8 @@ def home():
 										   merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] +
 										   merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']), 3)
 
-	merged_wins = [['Team Name','Owner', 'Team 1', 'Team 1 Record',
+	merged_wins = merged_wins[['Team Name','Owner', 'Total Wins', 'Win Percentage',
+							   'Team 1', 'Team 1 Record',
 							   'Team 2','Team 2 Record',
 							   'Team 3', 'Team 3 Record',
 							   'Team 4',  'Team 4 Record']]
