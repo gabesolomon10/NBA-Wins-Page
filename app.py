@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flaskext.mysql import MySQL
 import requests
+from bs4 import BeautifulSoup
 
 # caching imports
 from flask_caching import Cache
@@ -10,6 +11,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import wget
+import os
 
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import leaguestandings
@@ -31,8 +33,31 @@ mysql.init_app(app)
 #Get the standings
 def home():
 
-	standings = leaguestandings.LeagueStandings()
-	standings_df = standings.get_data_frames()[0]
+	#Scrape standings from basketball-reference
+	stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2020.html')
+	content = stats_page.content
+	soup = BeautifulSoup(content, 'html.parser')
+
+	western_conf = soup.find(name='table', attrs={'id': 'confs_standings_W'})
+	eastern_conf = soup.find(name='table', attrs={'id': 'confs_standings_E'})
+
+	western_str = str(western_conf)
+	eastern_str = str(eastern_conf)
+
+	western_conf_df = pd.read_html(western_str)[0]
+	eastern_conf_df = pd.read_html(eastern_str)[0]
+
+	western_conf_df = western_conf_df.rename(columns={"Western Conference": "Team"})
+	eastern_conf_df = eastern_conf_df.rename(columns={"Eastern Conference": "Team"})
+
+	#Add necessary columns to standings
+	standings_df = western_conf_df.append(eastern_conf_df)
+	standings_df['Team'] = standings_df['Team'].str.extract('(.*)[(]')
+	standings_df['Team'] = standings_df['Team'].astype(str)
+	standings_df['Team'] = standings_df['Team'].str.strip()
+
+	standings_df["Record"] = standings_df['W'].map(str) + "-" + standings_df['L'].map(str)
+
 
 
 	# Set up the teams
@@ -54,44 +79,46 @@ def home():
 	                      'Team 4': ['Grizzlies', 'Knicks', 'Wizards', 'Suns', 'Thunder', 'Bulls', 'Kings']})
 
 	#Create the wins table
-	merged_wins = teams.merge(standings_df, left_on = 'Team 1', right_on = 'TeamName')
-	merged_wins = merged_wins[['Team Name','Owner', 'Team 1', 'PreAS', 'Team 2', 'Team 3', 'Team 4']]
-	merged_wins = merged_wins.rename(columns= {"PreAS": 'Team 1 Wins'})
+	merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
+	merged_wins = merged_wins[['Team Name', 'Owner', 'Team 1', 'W', 'L', 'Record', 'Team 2', 'Team 3', 'Team 4']]
+	merged_wins = merged_wins.rename(columns={"W": 'Team 1 Wins', 'L': 'Team 1 Losses', "Record": "Team 1 Record"})
 
-	merged_wins = merged_wins.merge(standings_df, left_on = 'Team 2', right_on = 'TeamName')
-	merged_wins = merged_wins[['Team Name','Owner', 'Team 1', 'Team 1 Wins', 'Team 2', 'PreAS', 'Team 3', 'Team 4']]
-	merged_wins = merged_wins.rename(columns= {"PreAS": "Team 2 Wins"})
+	merged_wins = merged_wins.merge(standings_df, left_on='Team 2', right_on='Team')
+	merged_wins = merged_wins[['Team Name', 'Owner', 'Team 1', 'Team 1 Wins', 'Team 1 Losses', 'Team 1 Record',
+							   'Team 2', 'W', 'L', 'Record', 'Team 3', 'Team 4']]
+	merged_wins = merged_wins.rename(columns={"W": 'Team 2 Wins', 'L': 'Team 2 Losses', "Record": "Team 2 Record"})
 
-	merged_wins = merged_wins.merge(standings_df, left_on = 'Team 3', right_on = 'TeamName')
-	merged_wins = merged_wins[['Team Name','Owner', 'Team 1', 'Team 1 Wins', 'Team 2', 'Team 2 Wins',
-	                           'Team 3', 'PreAS', 'Team 4']]
-	merged_wins = merged_wins.rename(columns= {"PreAS": "Team 3 Wins"})
+	merged_wins = merged_wins.merge(standings_df, left_on='Team 3', right_on='Team')
+	merged_wins = merged_wins[['Team Name', 'Owner','Team 1', 'Team 1 Wins', 'Team 1 Losses', 'Team 1 Record',
+							   'Team 2', 'Team 2 Wins', 'Team 2 Losses', 'Team 2 Record',
+							   'Team 3', 'W', 'L', 'Record', 'Team 4']]
+	merged_wins = merged_wins.rename(columns={"W": 'Team 3 Wins', 'L': 'Team 3 Losses', "Record": "Team 3 Record"})
 
-	merged_wins = merged_wins.merge(standings_df, left_on = 'Team 4', right_on = 'TeamName')
-	merged_wins = merged_wins[['Team Name','Owner', 'Team 1', 'Team 1 Wins',
-	                           'Team 2', 'Team 2 Wins',
-	                           'Team 3', 'Team 3 Wins', 'Team 4', 'PreAS']]
-	merged_wins = merged_wins.rename(columns= {"PreAS": "Team 4 Wins"})
+	merged_wins = merged_wins.merge(standings_df, left_on='Team 4', right_on='Team')
+	merged_wins = merged_wins[['Team Name','Owner', 'Team 1', 'Team 1 Wins', 'Team 1 Losses', 'Team 1 Record',
+							   'Team 2', 'Team 2 Wins', 'Team 2 Losses', 'Team 2 Record',
+							   'Team 3', 'Team 3 Wins', 'Team 3 Losses', 'Team 3 Record',
+							   'Team 4', 'W', 'L', 'Record']]
+	merged_wins = merged_wins.rename(columns={"W": 'Team 4 Wins', 'L': 'Team 4 Losses', "Record": "Team 4 Record"})
 
-	merged_wins['Total Wins'] = merged_wins['Team 1 Wins'].str.extract('(.*)[-]').astype(int) \
-	+ merged_wins['Team 2 Wins'].str.extract('(.*)[-]').astype(int) \
-	+ merged_wins['Team 3 Wins'].str.extract('(.*)[-]').astype(int) \
-	+ merged_wins['Team 4 Wins'].str.extract('(.*)[-]').astype(int)
+	merged_wins = merged_wins[['Team Name','Owner', 'Team 1', 'Team 1 Wins', 'Team 1 Losses', 'Team 1 Record',
+							   'Team 2', 'Team 2 Wins', 'Team 2 Losses', 'Team 2 Record',
+							   'Team 3', 'Team 3 Wins', 'Team 3 Losses', 'Team 3 Record',
+							   'Team 4', 'Team 4 Wins', 'Team 4 Losses', 'Team 4 Record']]
 
-	merged_wins['Total Losses'] = merged_wins['Team 1 Wins'].str.extract('[-](.*)').astype(int) \
-	+ merged_wins['Team 2 Wins'].str.extract('[-](.*)').astype(int) \
-	+ merged_wins['Team 3 Wins'].str.extract('[-](.*)').astype(int) \
-	+ merged_wins['Team 4 Wins'].str.extract('[-](.*)').astype(int)
+	merged_wins['Total Wins'] = merged_wins['Team 1 Wins'] + merged_wins['Team 2 Wins'] +\
+								merged_wins['Team 3 Wins'] + merged_wins['Team 4 Wins']
 
-	merged_wins['Win Percentage'] = round(merged_wins['Total Wins']/(merged_wins['Total Wins']+merged_wins['Total Losses']),3)
+	merged_wins['Win Percentage'] = round((merged_wins['Total Wins'])/
+										  (merged_wins['Total Wins'] +
+										   merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] +
+										   merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']), 3)
 
-	cols = merged_wins.columns.tolist()
-	cols.insert(2, cols.pop(cols.index('Total Wins')))
-	cols.insert(3, cols.pop(cols.index('Win Percentage')))
-	merged_wins = merged_wins.reindex(columns= cols)
-
+	merged_wins = [['Team Name','Owner', 'Team 1', 'Team 1 Record',
+							   'Team 2','Team 2 Record',
+							   'Team 3', 'Team 3 Record',
+							   'Team 4',  'Team 4 Record']]
 	#NBA Logos
-
 	merged_wins['Team 1 Image'] = [os.path.join(app.config['nba_folder'],'bucks.png'),
 								   os.path.join(app.config['nba_folder'],'76ers.png'),
 								   os.path.join(app.config['nba_folder'],'clippers.png'),
