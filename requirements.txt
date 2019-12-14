@@ -15,6 +15,7 @@ itsdangerous==1.1.0
 jdcal==1.4.1
 Jinja2==2.10.3
 kiwisolver==1.1.0
+lxml==4.4.0
 MarkupSafe==1.1.1
 matplotlib==3.1.2
 nba_api==1.1.5
