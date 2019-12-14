@@ -88,28 +88,13 @@ def home():
 	merged_wins = merged_wins.rename(columns={"W": 'Team 1 Wins', 'L': 'Team 1 Losses', "Record": "Team 1 Record"})
 
 	merged_wins = merged_wins.merge(standings_df, left_on='Team 2', right_on='Team')
-	merged_wins = merged_wins[['Team Name', 'Owner', 'Team 1', 'Team 1 Wins', 'Team 1 Losses', 'Team 1 Record',
-							   'Team 2', 'W', 'L', 'Record', 'Team 3', 'Team 4']]
 	merged_wins = merged_wins.rename(columns={"W": 'Team 2 Wins', 'L': 'Team 2 Losses', "Record": "Team 2 Record"})
 
 	merged_wins = merged_wins.merge(standings_df, left_on='Team 3', right_on='Team')
-	merged_wins = merged_wins[['Team Name', 'Owner','Team 1', 'Team 1 Wins', 'Team 1 Losses', 'Team 1 Record',
-							   'Team 2', 'Team 2 Wins', 'Team 2 Losses', 'Team 2 Record',
-							   'Team 3', 'W', 'L', 'Record', 'Team 4']]
 	merged_wins = merged_wins.rename(columns={"W": 'Team 3 Wins', 'L': 'Team 3 Losses', "Record": "Team 3 Record"})
 
 	merged_wins = merged_wins.merge(standings_df, left_on='Team 4', right_on='Team')
-	merged_wins = merged_wins[['Team Name','Owner', 'Team 1', 'Team 1 Wins', 'Team 1 Losses', 'Team 1 Record',
-							   'Team 2', 'Team 2 Wins', 'Team 2 Losses', 'Team 2 Record',
-							   'Team 3', 'Team 3 Wins', 'Team 3 Losses', 'Team 3 Record',
-							   'Team 4', 'W', 'L', 'Record']]
 	merged_wins = merged_wins.rename(columns={"W": 'Team 4 Wins', 'L': 'Team 4 Losses', "Record": "Team 4 Record"})
-
-	merged_wins = merged_wins[['Team Name','Owner', 
-	'Team 1', 'Team 1 Wins', 'Team 1 Losses', 'Team 1 Record',
-							   'Team 2', 'Team 2 Wins', 'Team 2 Losses', 'Team 2 Record',
-							   'Team 3', 'Team 3 Wins', 'Team 3 Losses', 'Team 3 Record',
-							   'Team 4', 'Team 4 Wins', 'Team 4 Losses', 'Team 4 Record']]
 
 	merged_wins['Total Wins'] = merged_wins['Team 1 Wins'] + merged_wins['Team 2 Wins'] +\
 								merged_wins['Team 3 Wins'] + merged_wins['Team 4 Wins']
@@ -165,8 +150,8 @@ def home():
 	                                       team3_data = merged_wins.iloc[2].values, 
 	                                       team4_data = merged_wins.iloc[3].values,
 	                                       team5_data = merged_wins.iloc[4].values, 
-	                                       team6_data = merged_wins.iloc[5].values)
-	                                       #team7_data = merged_wins.iloc[6].values,)
+	                                       team6_data = merged_wins.iloc[5].values,
+	                                       team7_data = merged_wins.iloc[6].values)
 
 if __name__ == "__main__":
     app.run(debug=True)
