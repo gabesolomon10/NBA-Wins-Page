@@ -73,7 +73,7 @@ def home():
 									os.path.join(app.config['profiles_folder'],'young.png'),
 									os.path.join(app.config['profiles_folder'],'ben.png')],
 	                      'Team 1': ['Milwaukee Bucks','Philadelphia 76ers', 'Los Angeles Clippers',
-	                      			  'Houston Rockets','Denver Nuggets', 'Los Angeles Lakers', ' Boston Celtics'],
+	                      			  'Houston Rockets','Denver Nuggets', 'Los Angeles Lakers', 'Boston Celtics'],
 	                      'Team 2': ['San Antonio Spurs', 'Portland Trail Blazers', 'Brooklyn Nets',
                                      'Indiana Pacers', 'Toronto Raptors', 'Golden State Warriors', 'Utah Jazz'],
 	                      'Team 3': ['Miami Heat', 'Dallas Mavericks', 'Orlando Magic',
@@ -83,8 +83,6 @@ def home():
 
 	#Create the wins table
 	merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
-
-	merged_wins = merged_wins[['Team Name', 'Owner', 'Team 1', 'W', 'L', 'Record', 'Team 2', 'Team 3', 'Team 4']]
 	merged_wins = merged_wins.rename(columns={"W": 'Team 1 Wins', 'L': 'Team 1 Losses', "Record": "Team 1 Record"})
 
 	merged_wins = merged_wins.merge(standings_df, left_on='Team 2', right_on='Team')
@@ -109,38 +107,42 @@ def home():
 							   'Team 2', 'Team 2 Record',
 							   'Team 3', 'Team 3 Record',
 							   'Team 4',  'Team 4 Record']]
+
+	#Apply Sam Young penalty
+	merged_wins.iloc[5, merged_wins.columns.get_loc('Total Wins')] = (merged_wins.iloc[5, merged_wins.columns.get_loc('Total Wins')] - 3)
+
 	#NBA Logos
-	merged_wins['Team 1 Image'] = pd.Series([os.path.join(app.config['nba_folder'],'bucks.png'),
+	merged_wins['Team 1 Image'] = [os.path.join(app.config['nba_folder'],'bucks.png'),
 								   os.path.join(app.config['nba_folder'],'76ers.png'),
 								   os.path.join(app.config['nba_folder'],'clippers.png'),
 								   os.path.join(app.config['nba_folder'],'rockets.png'),
 								   os.path.join(app.config['nba_folder'],'nuggets.png'),
 								   os.path.join(app.config['nba_folder'],'lakers.png'),
-								   os.path.join(app.config['nba_folder'],'celtics.png')])
+								   os.path.join(app.config['nba_folder'],'celtics.png')]
 
-	merged_wins['Team 2 Image'] = pd.Series([os.path.join(app.config['nba_folder'],'spurs.png'),
+	merged_wins['Team 2 Image'] = [os.path.join(app.config['nba_folder'],'spurs.png'),
 								   os.path.join(app.config['nba_folder'],'trail_blazers.png'),
 								   os.path.join(app.config['nba_folder'],'nets.png'),
 								   os.path.join(app.config['nba_folder'],'pacers.png'),
 								   os.path.join(app.config['nba_folder'],'raptors.png'),
 								   os.path.join(app.config['nba_folder'],'warriors.png'),
-								   os.path.join(app.config['nba_folder'],'jazz.png')])
+								   os.path.join(app.config['nba_folder'],'jazz.png')]
 
-	merged_wins['Team 3 Image'] = pd.Series([os.path.join(app.config['nba_folder'],'heat.png'),
+	merged_wins['Team 3 Image'] = [os.path.join(app.config['nba_folder'],'heat.png'),
 								   os.path.join(app.config['nba_folder'],'mavericks.png'),
 								   os.path.join(app.config['nba_folder'],'magic.png'),
 								   os.path.join(app.config['nba_folder'],'pelicans.png'),
 								   os.path.join(app.config['nba_folder'],'timberwolves.png'),
 								   os.path.join(app.config['nba_folder'],'pistons.png'),
-								   os.path.join(app.config['nba_folder'],'hawks.png')])
+								   os.path.join(app.config['nba_folder'],'hawks.png')]
 
-	merged_wins['Team 4 Image'] = pd.Series([os.path.join(app.config['nba_folder'],'grizzlies.png'),
+	merged_wins['Team 4 Image'] = [os.path.join(app.config['nba_folder'],'grizzlies.png'),
 								   os.path.join(app.config['nba_folder'],'knicks.png'),
 								   os.path.join(app.config['nba_folder'],'wizards.png'),
 								   os.path.join(app.config['nba_folder'],'suns.png'),
 								   os.path.join(app.config['nba_folder'],'thunder.png'),
 								   os.path.join(app.config['nba_folder'],'bulls.png'),
-								   os.path.join(app.config['nba_folder'],'kings.png')])
+								   os.path.join(app.config['nba_folder'],'kings.png')]
 
 	merged_wins = merged_wins.sort_values(by=['Total Wins'], ascending = False)
 	merged_wins.reset_index(drop=True, inplace=True)
