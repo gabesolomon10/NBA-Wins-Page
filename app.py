@@ -1,12 +1,13 @@
+#Import
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flaskext.mysql import MySQL
 import requests
 from bs4 import BeautifulSoup
 
-# caching imports
+#Caching imports
 from flask_caching import Cache
 
-# Other stuff
+#Import other stuff
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -14,10 +15,11 @@ import wget
 import os
 import lxml
 
-
+#Set folder paths
 logos_folder = os.path.join('static', 'nba_logos')
 pics_folder = os.path.join('static', 'profiles')
 
+#App setup
 app = Flask(__name__)
 app.config['nba_folder'] = logos_folder
 app.config['profiles_folder'] = pics_folder
@@ -28,6 +30,7 @@ app.secret_key = 'a;sldks;js?##s;kasjjdfjd'
 mysql = MySQL()
 mysql.init_app(app)
 
+#Define homepage
 @app.route("/")
 #Get the standings
 def home():
@@ -148,6 +151,7 @@ def home():
 	merged_wins = merged_wins.sort_values(by=['Total Wins'], ascending = False)
 	merged_wins.reset_index(drop=True, inplace=True)
 
+	#Pass league standings to html
 	return render_template('responsive_table.html',  team1_data = merged_wins.iloc[0].values,
 	 									   team2_data = merged_wins.iloc[1].values,
 	                                       team3_data = merged_wins.iloc[2].values, 
@@ -156,6 +160,7 @@ def home():
 	                                       team6_data = merged_wins.iloc[5].values,
 	                                       team7_data = merged_wins.iloc[6].values)
 
+#Debugger
 if __name__ == "__main__":
     app.run(debug=True)
 
