@@ -58,6 +58,7 @@ def home():
 	standings_df['Team'] = standings_df['Team'].str.extract('(.*)[(]')
 	standings_df['Team'] = standings_df['Team'].astype(str)
 	standings_df['Team'] = standings_df['Team'].str.strip()
+	standings_df['Team'] = standings_df['Team'].str.replace("*", "")
 
 	standings_df["Record"] = standings_df['W'].map(str) + "-" + standings_df['L'].map(str)
 
@@ -160,9 +161,45 @@ def home():
 	                                       team6_data = merged_wins.iloc[5].values,
 	                                       team7_data = merged_wins.iloc[6].values)
 
-#Debugger
+
+# @app.route('/tracker',methods=['GET'])
+# #Create monthly tracker
+# def tracker():
+# 	if request.method == 'GET':
+
+# 		teams = pd.DataFrame({'Team Name': ['Team Nebeyu', 
+# 										'They all start with 0 wins', 
+# 	                                    "Our friend is an alcoholic and it's troubling", 
+# 	                                    "Sammy Ps AF1s Est. 2011",
+# 	                                    "Pre-pubescent toddler",
+# 	                                    "Did it",
+# 	                                    "Benjamin Bogdanovic"],
+# 	                      'Owner': [os.path.join(app.config['profiles_folder'],'nebeyu.png'),
+# 									os.path.join(app.config['profiles_folder'],'phil.png'),
+# 									os.path.join(app.config['profiles_folder'],'fitz.png'),
+# 									os.path.join(app.config['profiles_folder'],'cepehr.png'),
+# 									os.path.join(app.config['profiles_folder'],'gabe.png'),
+# 									os.path.join(app.config['profiles_folder'],'young.png'),
+# 									os.path.join(app.config['profiles_folder'],'ben.png')],
+# 						  'November Wins': [11,11,11,11,11,11,11],
+# 						  'December Wins': [11,11,11,11,11,11,11]})
+
+# 		return render_template('tracker_table.html',  team1_data = teams[0].values,
+# 	 									   team2_data = teams[1].values,
+# 	                                       team3_data = teams[2].values, 
+# 	                                       team4_data = teams[3].values,
+# 	                                       team5_data = teams[4].values, 
+# 	                                       team6_data = teams[5].values,
+# 	                                       team7_data = teams[6].values)
+
+
+
+# Debugger
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
 
 
 
