@@ -36,7 +36,7 @@ mysql.init_app(app)
 def home():
 
 	#Scrape standings from basketball-reference
-	stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2020.html')
+	stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2021.html')
 	content = stats_page.content
 	soup = BeautifulSoup(content, 'html.parser')
 
@@ -55,7 +55,7 @@ def home():
 	#Add necessary columns to standings
 	standings_df = western_conf_df.append(eastern_conf_df)
 
-	standings_df['Team'] = standings_df['Team'].str.extract('(.*)[(]')
+	standings_df['Team'] = standings_df['Team'].str.extract('(.\(1\))[(]')
 	standings_df['Team'] = standings_df['Team'].astype(str)
 	standings_df['Team'] = standings_df['Team'].str.strip()
 	standings_df['Team'] = standings_df['Team'].str.replace("*", "")
@@ -77,14 +77,14 @@ def home():
 									os.path.join(app.config['profiles_folder'],'gabe.png'),
 									os.path.join(app.config['profiles_folder'],'young.png'),
 									os.path.join(app.config['profiles_folder'],'ben.png')],
-	                      'Team 1': ['Milwaukee Bucks','Philadelphia 76ers', 'Los Angeles Clippers',
-	                      			  'Houston Rockets','Denver Nuggets', 'Los Angeles Lakers', 'Boston Celtics'],
-	                      'Team 2': ['San Antonio Spurs', 'Portland Trail Blazers', 'Brooklyn Nets',
-                                     'Indiana Pacers', 'Toronto Raptors', 'Golden State Warriors', 'Utah Jazz'],
-	                      'Team 3': ['Miami Heat', 'Dallas Mavericks', 'Orlando Magic',
-                                     'New Orleans Pelicans', 'Minnesota Timberwolves','Detroit Pistons', 'Atlanta Hawks'],
-	                      'Team 4': ['Memphis Grizzlies', 'New York Knicks', 'Washington Wizards', 'Phoenix Suns',
-                                     'Oklahoma City Thunder', 'Chicago Bulls', 'Sacramento Kings']})
+	                      'Team 1': ['Milwaukee Bucks','Miami Heat', 'Brooklyn Nets',
+	                      			  'Boston Celtics','Los Angeles Lakers', 'Los Angeles Clippers', 'Denver Nuggets'],
+	                      'Team 2': ['Indiana Pacers', 'Philadelphia 76ers', 'Portland Trail Blazers',
+                                     'Toronto Raptors', 'Phoenix Suns', 'Utah Jazz', 'Dallas Mavericks'],
+	                      'Team 3': ['Golden State Warriors', 'Memphis Grizzlies', 'Atlanta Hawks',
+                                     'Houston Rockets', 'New Orleans Pelicans', 'Washington Wizards','Orlando Magic'],
+	                      'Team 4': ['Detroit Pistons', 'San Antonio Spurs', 'Charlotte Hornets', 'Minnesota Timberwolves',
+                                     'Cleveland Cavaliers', 'Sacramento Kings', 'Chicago Bulls']})
 
 	#Create the wins table
 	merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
@@ -113,8 +113,8 @@ def home():
 							   'Team 3', 'Team 3 Record',
 							   'Team 4',  'Team 4 Record']]
 
-	#Apply Sam Young penalty
-	merged_wins.iloc[5, merged_wins.columns.get_loc('Total Wins')] = (merged_wins.iloc[5, merged_wins.columns.get_loc('Total Wins')] - 3)
+	#Apply Nebeyu penalty
+	merged_wins.iloc[0, merged_wins.columns.get_loc('Total Wins')] = (merged_wins.iloc[0, merged_wins.columns.get_loc('Total Wins')] - 5)
 
 	#NBA Logos
 	merged_wins['Team 1 Image'] = [os.path.join(app.config['nba_folder'],'bucks.png'),
