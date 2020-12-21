@@ -106,6 +106,7 @@ def home():
 										  (merged_wins['Total Wins'] +
 										   merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] +
 										   merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']), 3)
+	merged_wins['Win Percentage'] = merged_wins['Win Percentage'].replace(np.nan, .000)
 
 	merged_wins = merged_wins[['Team Name','Owner', 'Total Wins', 'Win Percentage',
 							   'Team 1', 'Team 1 Record',
