@@ -118,36 +118,36 @@ def home():
 
 	#NBA Logos
 	merged_wins['Team 1 Image'] = [os.path.join(app.config['nba_folder'],'bucks.png'),
-								   os.path.join(app.config['nba_folder'],'76ers.png'),
-								   os.path.join(app.config['nba_folder'],'clippers.png'),
-								   os.path.join(app.config['nba_folder'],'rockets.png'),
-								   os.path.join(app.config['nba_folder'],'nuggets.png'),
-								   os.path.join(app.config['nba_folder'],'lakers.png'),
-								   os.path.join(app.config['nba_folder'],'celtics.png')]
-
-	merged_wins['Team 2 Image'] = [os.path.join(app.config['nba_folder'],'spurs.png'),
-								   os.path.join(app.config['nba_folder'],'trail_blazers.png'),
+								   os.path.join(app.config['nba_folder'],'heat.png'),
 								   os.path.join(app.config['nba_folder'],'nets.png'),
-								   os.path.join(app.config['nba_folder'],'pacers.png'),
+								   os.path.join(app.config['nba_folder'],'celtics.png'),
+								   os.path.join(app.config['nba_folder'],'lakers.png'),
+								   os.path.join(app.config['nba_folder'],'clippers.png'),
+								   os.path.join(app.config['nba_folder'],'nuggets.png')]
+
+	merged_wins['Team 2 Image'] = [os.path.join(app.config['nba_folder'],'pacers.png'),
+								   os.path.join(app.config['nba_folder'],'76ers.png'),
+								   os.path.join(app.config['nba_folder'],'trail_blazers.png'),
 								   os.path.join(app.config['nba_folder'],'raptors.png'),
-								   os.path.join(app.config['nba_folder'],'warriors.png'),
-								   os.path.join(app.config['nba_folder'],'jazz.png')]
-
-	merged_wins['Team 3 Image'] = [os.path.join(app.config['nba_folder'],'heat.png'),
-								   os.path.join(app.config['nba_folder'],'mavericks.png'),
-								   os.path.join(app.config['nba_folder'],'magic.png'),
-								   os.path.join(app.config['nba_folder'],'pelicans.png'),
-								   os.path.join(app.config['nba_folder'],'timberwolves.png'),
-								   os.path.join(app.config['nba_folder'],'pistons.png'),
-								   os.path.join(app.config['nba_folder'],'hawks.png')]
-
-	merged_wins['Team 4 Image'] = [os.path.join(app.config['nba_folder'],'grizzlies.png'),
-								   os.path.join(app.config['nba_folder'],'knicks.png'),
-								   os.path.join(app.config['nba_folder'],'wizards.png'),
 								   os.path.join(app.config['nba_folder'],'suns.png'),
-								   os.path.join(app.config['nba_folder'],'thunder.png'),
-								   os.path.join(app.config['nba_folder'],'bulls.png'),
-								   os.path.join(app.config['nba_folder'],'kings.png')]
+								   os.path.join(app.config['nba_folder'],'jazz.png'),
+								   os.path.join(app.config['nba_folder'],'mavericks.png')]
+
+	merged_wins['Team 3 Image'] = [os.path.join(app.config['nba_folder'],'warriors.png'),
+								   os.path.join(app.config['nba_folder'],'grizzlies.png'),
+								   os.path.join(app.config['nba_folder'],'hawks.png'),
+								   os.path.join(app.config['nba_folder'],'rockets.png'),
+								   os.path.join(app.config['nba_folder'],'pelicans.png'),
+								   os.path.join(app.config['nba_folder'],'wizards.png'),
+								   os.path.join(app.config['nba_folder'],'magic.png')]
+
+	merged_wins['Team 4 Image'] = [os.path.join(app.config['nba_folder'],'pistons.png'),
+								   os.path.join(app.config['nba_folder'],'spurs.png'),
+								   os.path.join(app.config['nba_folder'],'hornets.png'),
+								   os.path.join(app.config['nba_folder'],'timberwolves.png'),
+								   os.path.join(app.config['nba_folder'],'cavaliers.png'),
+								   os.path.join(app.config['nba_folder'],'kings.png'),
+								   os.path.join(app.config['nba_folder'],'bulls.png')]
 
 	merged_wins = merged_wins.sort_values(by=['Total Wins'], ascending = False)
 	merged_wins.reset_index(drop=True, inplace=True)
