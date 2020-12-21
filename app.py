@@ -114,7 +114,7 @@ def home():
 							   'Team 4',  'Team 4 Record']]
 
 	#Apply Nebeyu penalty
-	merged_wins.iloc[0, merged_wins.columns.get_loc('Total Wins')] = (merged_wins.iloc[0, merged_wins.columns.get_loc('Total Wins')] - 5)
+	#merged_wins.iloc[0, merged_wins.columns.get_loc('Total Wins')] = (merged_wins.iloc[0, merged_wins.columns.get_loc('Total Wins')] - 5)
 
 	#NBA Logos
 	merged_wins['Team 1 Image'] = [os.path.join(app.config['nba_folder'],'bucks.png'),
