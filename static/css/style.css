@@ -1,7 +1,7 @@
 body {
   font-family: "Futura", sans-serif;
   line-height: 1.25;
-  background-image: url('../nba_logos/NBA_Background.png');;
+  background-image: url('../static/nba_logos/NBA_Background');
   height: 100vh;
   width: 100vw;
 }
