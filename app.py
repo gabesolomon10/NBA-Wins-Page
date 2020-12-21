@@ -55,10 +55,10 @@ def home():
 	#Add necessary columns to standings
 	standings_df = western_conf_df.append(eastern_conf_df)
 
-	standings_df['Team'] = standings_df['Team'].str.extract('(.\(1\))[(]')
+	standings_df['Team'] = standings_df['Team'].str.extract('(.*)[(]')
 	standings_df['Team'] = standings_df['Team'].astype(str)
 	standings_df['Team'] = standings_df['Team'].str.strip()
-	standings_df['Team'] = standings_df['Team'].str.replace("*", "")
+	standings_df['Team'] = standings_df['Team'].str.replace("\(1\)", "")
 
 	standings_df["Record"] = standings_df['W'].map(str) + "-" + standings_df['L'].map(str)
 
