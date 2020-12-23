@@ -57,11 +57,8 @@ def home():
 
 	#standings_df['Team'] = standings_df['Team'].str.extract('(.*)[(]')
 	standings_df['Team'] = standings_df['Team'].astype(str)
+	standings_df['Team'] = standings_df['Team'].str.replace("\([0-9]+\)", "")
 	standings_df['Team'] = standings_df['Team'].str.strip()
-	standings_df['Team'] = standings_df['Team'].str.replace("\(1\)", "")
-
-	# Account for NANs at beginning of season
-	standings_df['Team'] = standings_df['Team'].str.replace("\(1\)", "")
 
 	standings_df['W'] = standings_df['W'].replace(np.nan, 0)
 	standings_df['L'] = standings_df['L'].replace(np.nan, 0)
