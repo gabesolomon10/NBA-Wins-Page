@@ -154,7 +154,7 @@ def home():
 								   os.path.join(app.config['nba_folder'],'kings.png'),
 								   os.path.join(app.config['nba_folder'],'bulls.png')]
 
-	merged_wins = merged_wins.sort_values(by=['Total Wins'], ascending = False)
+	merged_wins = merged_wins.sort_values(by=['Total Wins', 'Win Percentage'], ascending = False)
 	merged_wins.reset_index(drop=True, inplace=True)
 
 	#Pass league standings to html
