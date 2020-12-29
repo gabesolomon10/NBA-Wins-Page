@@ -31,7 +31,7 @@ mysql = MySQL()
 mysql.init_app(app)
 
 #Define homepage
-@app.route("/")
+@app.route("/", methods=['GET'])
 #Get the standings
 def home():
 
@@ -172,7 +172,89 @@ def home():
 def tracker():
 	if request.method == 'GET':
 
+		# Get current wins
+
+		# Scrape standings from basketball-reference
+		stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2021.html')
+		content = stats_page.content
+		soup = BeautifulSoup(content, 'html.parser')
+
+		western_conf = soup.find(name='table', attrs={'id': 'confs_standings_W'})
+		eastern_conf = soup.find(name='table', attrs={'id': 'confs_standings_E'})
+
+		western_str = str(western_conf)
+		eastern_str = str(eastern_conf)
+
+		western_conf_df = pd.read_html(western_str)[0]
+		eastern_conf_df = pd.read_html(eastern_str)[0]
+
+		western_conf_df = western_conf_df.rename(columns={"Western Conference": "Team"})
+		eastern_conf_df = eastern_conf_df.rename(columns={"Eastern Conference": "Team"})
+
+		# Add necessary columns to standings
+		standings_df = western_conf_df.append(eastern_conf_df)
+
+		# standings_df['Team'] = standings_df['Team'].str.extract('(.*)[(]')
+		standings_df['Team'] = standings_df['Team'].astype(str)
+		standings_df['Team'] = standings_df['Team'].str.replace("\([0-9]+\)", "")
+		standings_df['Team'] = standings_df['Team'].str.strip()
+
+		standings_df['W'] = standings_df['W'].replace(np.nan, 0)
+		standings_df['L'] = standings_df['L'].replace(np.nan, 0)
+		standings_df['W'] = standings_df["W"].round().astype(int)
+		standings_df['L'] = standings_df["L"].round().astype(int)
+		standings_df["Record"] = standings_df['W'].map(str) + "-" + standings_df['L'].map(str)
+
+		# Set up the teams
 		teams = pd.DataFrame({'Team Name': ['Team Nebeyu',
+											'They all start with 0 wins',
+											"Our friend is an alcoholic and it's troubling",
+											"Sammy Ps AF1s Est. 2011",
+											"Pre-pubescent toddler",
+											"Did it",
+											"Benjamin Bogdanovic"],
+							  'Owner': [os.path.join(app.config['profiles_folder'], 'nebeyu.png'),
+										os.path.join(app.config['profiles_folder'], 'phil.png'),
+										os.path.join(app.config['profiles_folder'], 'fitz.png'),
+										os.path.join(app.config['profiles_folder'], 'cepehr.png'),
+										os.path.join(app.config['profiles_folder'], 'gabe.png'),
+										os.path.join(app.config['profiles_folder'], 'young.png'),
+										os.path.join(app.config['profiles_folder'], 'ben.png')],
+							  'Team 1': ['Milwaukee Bucks', 'Miami Heat', 'Brooklyn Nets',
+										 'Boston Celtics', 'Los Angeles Lakers', 'Los Angeles Clippers',
+										 'Denver Nuggets'],
+							  'Team 2': ['Indiana Pacers', 'Philadelphia 76ers', 'Portland Trail Blazers',
+										 'Toronto Raptors', 'Phoenix Suns', 'Utah Jazz', 'Dallas Mavericks'],
+							  'Team 3': ['Golden State Warriors', 'Memphis Grizzlies', 'Atlanta Hawks',
+										 'Houston Rockets', 'New Orleans Pelicans', 'Washington Wizards',
+										 'Orlando Magic'],
+							  'Team 4': ['Detroit Pistons', 'San Antonio Spurs', 'Charlotte Hornets',
+										 'Minnesota Timberwolves',
+										 'Cleveland Cavaliers', 'Sacramento Kings', 'Chicago Bulls']})
+
+		# Create the wins table
+		merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
+		merged_wins = merged_wins.rename(columns={"W": 'Team 1 Wins', 'L': 'Team 1 Losses', "Record": "Team 1 Record"})
+
+		merged_wins = merged_wins.merge(standings_df, left_on='Team 2', right_on='Team')
+		merged_wins = merged_wins.rename(columns={"W": 'Team 2 Wins', 'L': 'Team 2 Losses', "Record": "Team 2 Record"})
+
+		merged_wins = merged_wins.merge(standings_df, left_on='Team 3', right_on='Team')
+		merged_wins = merged_wins.rename(columns={"W": 'Team 3 Wins', 'L': 'Team 3 Losses', "Record": "Team 3 Record"})
+
+		merged_wins = merged_wins.merge(standings_df, left_on='Team 4', right_on='Team')
+		merged_wins = merged_wins.rename(columns={"W": 'Team 4 Wins', 'L': 'Team 4 Losses', "Record": "Team 4 Record"})
+
+		merged_wins['Total Wins'] = merged_wins['Team 1 Wins'] + merged_wins['Team 2 Wins'] + \
+									merged_wins['Team 3 Wins'] + merged_wins['Team 4 Wins']
+
+		merged_wins['Win Percentage'] = round((merged_wins['Total Wins']) /
+											  (merged_wins['Total Wins'] +
+											   merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] +
+											   merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']), 3)
+		merged_wins['Win Percentage'] = merged_wins['Win Percentage'].replace(np.nan, .000)
+
+		teams_standings = pd.DataFrame({'Team Name': ['Team Nebeyu',
 										'They all start with 0 wins',
 	                                    "Our friend is an alcoholic and it's troubling",
 	                                    "Sammy Ps AF1s Est. 2011",
@@ -186,17 +268,18 @@ def tracker():
 									os.path.join(app.config['profiles_folder'],'gabe.png'),
 									os.path.join(app.config['profiles_folder'],'young.png'),
 									os.path.join(app.config['profiles_folder'],'ben.png')],
-						  'December Win %': [11,11,11,11,11,11,11]})
+						  'December Win %': merged_wins['Win Percentage']})
 
-		return render_template('tracker_table.html',  team1_data = teams[0].values,
-	 									   team2_data = teams[1].values,
-	                                       team3_data = teams[2].values,
-	                                       team4_data = teams[3].values,
-	                                       team5_data = teams[4].values,
-	                                       team6_data = teams[5].values,
-	                                       team7_data = teams[6].values)
+		teams_standings = teams_standings.sort_values(by=['December Win %'], ascending=False)
+		teams_standings.reset_index(drop=True, inplace=True)
 
-
+		return render_template('tracker_table.html',  team1_data = teams_standings.iloc[0].values,
+	 									   team2_data = teams_standings.iloc[1].values,
+	                                       team3_data = teams_standings.iloc[2].values,
+	                                       team4_data = teams_standings.iloc[3].values,
+	                                       team5_data = teams_standings.iloc[4].values,
+	                                       team6_data = teams_standings.iloc[5].values,
+	                                       team7_data = teams_standings.iloc[6].values)
 
 # Debugger
 if __name__ == "__main__":
