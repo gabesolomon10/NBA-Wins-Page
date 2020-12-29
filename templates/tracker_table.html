@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" >
+  
+<link rel='icon' href="{{ url_for('static', filename='nba_logos/favicon.ico') }}" type='image/x-icon' />
+</head>
+
+<nav class="dropdownmenu">
+  <ul>
+    <li><a>Current Standings</a></li>
+    <li><a href="/tracker">Monthly Win Totals</a></li>
+  </ul>
+</nav>
+
+<body>
+
+        <table>
+          <caption class="text-center" style="color:white" text-shadow: white 0px 0px 10px;>Monthly Win Tracker </caption>
+          <thead>
+            <tr>
+              <th>Team Name</th>
+              <th>Owner</th>
+              <th>December Win %</th>
+            </tr>
+          </thead>
+
+            <tr>
+
+              <td>{{team1_data[0]}}</td>
+              <td><img class="profile" src="{{team1_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
+              <td>{{team1_data[2]}}</td>
+
+            </tr>
+
+             <tr>
+              
+             <td>{{team2_data[0]}}</td>
+              <td><img class="profile" src="{{team2_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
+              <td>{{team2_data[2]}}</td>
+
+            </tr>
+
+             <tr>
+              
+              <td>{{team3_data[0]}}</td>
+              <td><img class="profile" src="{{team3_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
+              <td>{{team3_data[2]}}</td>
+
+            </tr>
+
+             <tr>
+              
+              <td>{{team4_data[0]}}</td>
+              <td><img class="profile" src="{{team4_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
+              <td>{{team4_data[2]}}</td>
+
+            </tr>
+
+             <tr>
+              
+              <td>{{team5_data[0]}}</td>
+              <td><img class="profile" src="{{team5_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
+              <td>{{team5_data[2]}}</td>
+
+            </tr>
+
+             <tr>
+              
+              <td>{{team6_data[0]}}</td>
+              <td><img class="profile" src="{{team6_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
+              <td>{{team6_data[2]}}</td>
+
+            </tr>
+
+             <tr>
+              
+              <td>{{team7_data[0]}}</td>
+              <td><img class="profile" src="{{team7_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
+              <td>{{team7_data[2]}}</td>
+
+            </tr>
+
+          <tfoot>
+            <tr>
+              <td colspan="5" class="text-center">Data retrieved from <a href="https://pypi.org/project/sportsreference/" target="_blank">The SportsReference API</a>.</td>
+            </tr>
+          </tfoot>
+       
+       </table>
+
+</body>
+</html>
