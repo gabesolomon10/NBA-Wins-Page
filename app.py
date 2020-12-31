@@ -230,7 +230,9 @@ def tracker():
 										 'Orlando Magic'],
 							  'Team 4': ['Detroit Pistons', 'San Antonio Spurs', 'Charlotte Hornets',
 										 'Minnesota Timberwolves',
-										 'Cleveland Cavaliers', 'Sacramento Kings', 'Chicago Bulls']})
+										 'Cleveland Cavaliers', 'Sacramento Kings', 'Chicago Bulls'],
+							  'December Wins': [10,10,10,10,10,10,10],
+							  'December Losses': [10,10,10,10,10,10,10]})
 
 		# Create the wins table
 		merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
@@ -248,27 +250,35 @@ def tracker():
 		merged_wins['Total Wins'] = merged_wins['Team 1 Wins'] + merged_wins['Team 2 Wins'] + \
 									merged_wins['Team 3 Wins'] + merged_wins['Team 4 Wins']
 
-		merged_wins['Win Percentage'] = round((merged_wins['Total Wins']) /
-											  (merged_wins['Total Wins'] +
-											   merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] +
-											   merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']), 3)
-		merged_wins['Win Percentage'] = merged_wins['Win Percentage'].replace(np.nan, .000)
+		merged_wins['Total Losses'] = merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] + \
+									merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']
+
+		merged_win['December Win Percentage'] = round((merged_wins['December Wins']) /
+											  (merged_wins['December Wins'] +
+											   merged_wins['December Losses']), 3)
+		merged_wins['December Win Percentage'] = merged_wins['Win Percentage'].replace(np.nan, .000)
+
+		merged_wins['January Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins']) /
+											  (merged_wins['Total Wins'] - merged_wins['December Wins'] +
+											   merged_wins['Total Losses'] - merged_wins['December Losses']), 3)
+		merged_wins['January Win Percentage'] = merged_wins['January Win Percentage'].replace(np.nan, .000)
 
 		teams_standings = pd.DataFrame({'Team Name': ['Team Nebeyu',
-										'They all start with 0 wins',
-	                                    "Our friend is an alcoholic and it's troubling",
-	                                    "Sammy Ps AF1s Est. 2011",
-	                                    "Pre-pubescent toddler",
-	                                    "Did it",
-	                                    "Benjamin Bogdanovic"],
-	                      'Owner': [os.path.join(app.config['profiles_folder'],'nebeyu.png'),
-									os.path.join(app.config['profiles_folder'],'phil.png'),
-									os.path.join(app.config['profiles_folder'],'fitz.png'),
-									os.path.join(app.config['profiles_folder'],'cepehr.png'),
-									os.path.join(app.config['profiles_folder'],'gabe.png'),
-									os.path.join(app.config['profiles_folder'],'young.png'),
-									os.path.join(app.config['profiles_folder'],'ben.png')],
-						  'December Win %': merged_wins['Win Percentage']})
+													  'They all start with 0 wins',
+													  "Our friend is an alcoholic and it's troubling",
+													  "Sammy Ps AF1s Est. 2011",
+													  "Pre-pubescent toddler",
+													  "Did it",
+													  "Benjamin Bogdanovic"],
+										'Owner': [os.path.join(app.config['profiles_folder'], 'nebeyu.png'),
+												  os.path.join(app.config['profiles_folder'], 'phil.png'),
+												  os.path.join(app.config['profiles_folder'], 'fitz.png'),
+												  os.path.join(app.config['profiles_folder'], 'cepehr.png'),
+												  os.path.join(app.config['profiles_folder'], 'gabe.png'),
+												  os.path.join(app.config['profiles_folder'], 'young.png'),
+												  os.path.join(app.config['profiles_folder'], 'ben.png')],
+										'December Win %': merged_wins['December Win Percentage'],
+										'January Win %': merged_wins['January Win Percentage']})
 
 		teams_standings = teams_standings.sort_values(by=['December Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
