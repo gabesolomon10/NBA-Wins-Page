@@ -231,8 +231,8 @@ def tracker():
 							  'Team 4': ['Detroit Pistons', 'San Antonio Spurs', 'Charlotte Hornets',
 										 'Minnesota Timberwolves',
 										 'Cleveland Cavaliers', 'Sacramento Kings', 'Chicago Bulls'],
-							  'December Wins': [10,10,10,10,10,10,10],
-							  'December Losses': [10,10,10,10,10,10,10]})
+							  'December Wins': [8,9,10,7,13,9,8],
+							  'December Losses': [10,8,7,9,7,10,10]})
 
 		# Create the wins table
 		merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
@@ -253,10 +253,10 @@ def tracker():
 		merged_wins['Total Losses'] = merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] + \
 									merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']
 
-		merged_win['December Win Percentage'] = round((merged_wins['December Wins']) /
+		merged_wins['December Win Percentage'] = round((merged_wins['December Wins']) /
 											  (merged_wins['December Wins'] +
 											   merged_wins['December Losses']), 3)
-		merged_wins['December Win Percentage'] = merged_wins['Win Percentage'].replace(np.nan, .000)
+		merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
 
 		merged_wins['January Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins']) /
 											  (merged_wins['Total Wins'] - merged_wins['December Wins'] +
@@ -280,7 +280,7 @@ def tracker():
 										'December Win %': merged_wins['December Win Percentage'],
 										'January Win %': merged_wins['January Win Percentage']})
 
-		teams_standings = teams_standings.sort_values(by=['December Win %'], ascending=False)
+		teams_standings = teams_standings.sort_values(by=['January Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
 
 		return render_template('tracker_table.html',  team1_data = teams_standings.iloc[0].values,
