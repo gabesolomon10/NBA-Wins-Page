@@ -232,7 +232,9 @@ def tracker():
 										 'Minnesota Timberwolves',
 										 'Cleveland Cavaliers', 'Sacramento Kings', 'Chicago Bulls'],
 							  'December Wins': [8,9,10,7,13,9,8],
-							  'December Losses': [10,8,7,9,7,10,10]})
+							  'December Losses': [10,8,7,9,7,10,10],
+							  'January Wins': [30, 32, 32, 25, 28, 34, 27],
+							  'January Losses': [31, 25, 30, 34, 29, 23, 34]})
 
 		# Create the wins table
 		merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
@@ -258,10 +260,15 @@ def tracker():
 											   merged_wins['December Losses']), 3)
 		merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['January Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins']) /
-											  (merged_wins['Total Wins'] - merged_wins['December Wins'] +
-											   merged_wins['Total Losses'] - merged_wins['December Losses']), 3)
+		merged_wins['January Win Percentage'] = round((merged_wins['January Wins']) /
+													   (merged_wins['January Wins'] +
+														merged_wins['January Losses']), 3)
 		merged_wins['January Win Percentage'] = merged_wins['January Win Percentage'].replace(np.nan, .000)
+
+		merged_wins['February Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins'] - merged_wins['January Wins']) /
+											  (merged_wins['Total Wins'] - merged_wins['December Wins'] - merged_wins['January Wins'] +
+											   merged_wins['Total Losses'] - merged_wins['December Losses'] - merged_wins['January Losses']), 3)
+		merged_wins['February Win Percentage'] = merged_wins['February Win Percentage'].replace(np.nan, .000)
 
 		teams_standings = pd.DataFrame({'Team Name': ['Team Nebeyu',
 													  'They all start with 0 wins',
@@ -278,7 +285,8 @@ def tracker():
 												  os.path.join(app.config['profiles_folder'], 'young.png'),
 												  os.path.join(app.config['profiles_folder'], 'ben.png')],
 										'December Win %': merged_wins['December Win Percentage'],
-										'January Win %': merged_wins['January Win Percentage']})
+										'January Win %': merged_wins['January Win Percentage'],
+										'February Win %': merged_wins['February Win Percentage']})
 
 		teams_standings = teams_standings.sort_values(by=['January Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
