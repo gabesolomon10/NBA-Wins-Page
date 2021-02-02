@@ -288,7 +288,7 @@ def tracker():
 										'January Win %': merged_wins['January Win Percentage'],
 										'February Win %': merged_wins['February Win Percentage']})
 
-		teams_standings = teams_standings.sort_values(by=['Feburary Win %'], ascending=False)
+		teams_standings = teams_standings.sort_values(by=['February Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
 
 		return render_template('tracker_table.html',  team1_data = teams_standings.iloc[0].values,
