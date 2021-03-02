@@ -236,7 +236,7 @@ def tracker():
 							  'January Wins': [30, 32, 32, 25, 28, 34, 27],
 							  'January Losses': [31, 25, 30, 34, 29, 23, 34],
 							  'February Wins': [26, 30, 28, 20, 32, 34, 27],
-							  'February Losses': [30, 25, 27, 40, 26, 26, 25]
+							  'February Losses': [30, 23, 27, 40, 26, 26, 25]
 							  })
 
 		# Create the wins table
@@ -273,12 +273,11 @@ def tracker():
 													   merged_wins['February Losses']), 3)
 		merged_wins['February Win Percentage'] = merged_wins['February Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['March Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins'] -
-													 merged_wins['January Wins']) -  merged_wins['Feburary Wins']/
+		merged_wins['March Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins'] - merged_wins['January Wins'] -  merged_wins['February Wins'])/
 											  (merged_wins['Total Wins'] - merged_wins['December Wins'] -
-											   merged_wins['January Wins'] - merged_wins['Feburary Wins'] +
+											   merged_wins['January Wins'] - merged_wins['February Wins'] +
 											   merged_wins['Total Losses'] - merged_wins['December Losses'] -
-											   merged_wins['January Losses'] - merged_wins['Feburary Losses']), 3)
+											   merged_wins['January Losses'] - merged_wins['February Losses']), 3)
 		merged_wins['March Win Percentage'] = merged_wins['March Win Percentage'] .replace(np.nan, .000)
 
 		teams_standings = pd.DataFrame({'Team Name': ['Team Nebeyu',
