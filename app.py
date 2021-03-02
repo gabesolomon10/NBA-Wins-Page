@@ -234,7 +234,10 @@ def tracker():
 							  'December Wins': [8,9,10,7,13,9,8],
 							  'December Losses': [10,8,7,9,7,10,10],
 							  'January Wins': [30, 32, 32, 25, 28, 34, 27],
-							  'January Losses': [31, 25, 30, 34, 29, 23, 34]})
+							  'January Losses': [31, 25, 30, 34, 29, 23, 34],
+							  'February Wins': [26, 30, 28, 20, 32, 34, 27],
+							  'February Losses': [30, 25, 27, 40, 26, 26, 25]
+							  })
 
 		# Create the wins table
 		merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
@@ -265,10 +268,18 @@ def tracker():
 														merged_wins['January Losses']), 3)
 		merged_wins['January Win Percentage'] = merged_wins['January Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['February Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins'] - merged_wins['January Wins']) /
-											  (merged_wins['Total Wins'] - merged_wins['December Wins'] - merged_wins['January Wins'] +
-											   merged_wins['Total Losses'] - merged_wins['December Losses'] - merged_wins['January Losses']), 3)
+		merged_wins['February Win Percentage'] = round((merged_wins['February Wins']) /
+													  (merged_wins['February Wins'] +
+													   merged_wins['February Losses']), 3)
 		merged_wins['February Win Percentage'] = merged_wins['February Win Percentage'].replace(np.nan, .000)
+
+		merged_wins['March Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins'] -
+													 merged_wins['January Wins']) -  merged_wins['Feburary Wins']/
+											  (merged_wins['Total Wins'] - merged_wins['December Wins'] -
+											   merged_wins['January Wins'] - merged_wins['Feburary Wins'] +
+											   merged_wins['Total Losses'] - merged_wins['December Losses'] -
+											   merged_wins['January Losses'] - merged_wins['Feburary Losses']), 3)
+		merged_wins['March Win Percentage'] = merged_wins['March Win Percentage'] .replace(np.nan, .000)
 
 		teams_standings = pd.DataFrame({'Team Name': ['Team Nebeyu',
 													  'They all start with 0 wins',
@@ -286,18 +297,19 @@ def tracker():
 												  os.path.join(app.config['profiles_folder'], 'ben.png')],
 										'December Win %': merged_wins['December Win Percentage'],
 										'January Win %': merged_wins['January Win Percentage'],
-										'February Win %': merged_wins['February Win Percentage']})
+										'February Win %': merged_wins['February Win Percentage'],
+										'March Win %': merged_wins['March Win Percentage']})
 
-		teams_standings = teams_standings.sort_values(by=['February Win %'], ascending=False)
+		teams_standings = teams_standings.sort_values(by=['March Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
 
 		return render_template('tracker_table.html',  team1_data = teams_standings.iloc[0].values,
-	 									   team2_data = teams_standings.iloc[1].values,
-	                                       team3_data = teams_standings.iloc[2].values,
-	                                       team4_data = teams_standings.iloc[3].values,
-	                                       team5_data = teams_standings.iloc[4].values,
-	                                       team6_data = teams_standings.iloc[5].values,
-	                                       team7_data = teams_standings.iloc[6].values)
+							   team2_data = teams_standings.iloc[1].values,
+							   team3_data = teams_standings.iloc[2].values,
+							   team4_data = teams_standings.iloc[3].values,
+							   team5_data = teams_standings.iloc[4].values,
+							   team6_data = teams_standings.iloc[5].values,
+							   team7_data = teams_standings.iloc[6].values)
 
 # Debugger
 if __name__ == "__main__":
