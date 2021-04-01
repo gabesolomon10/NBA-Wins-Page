@@ -237,6 +237,8 @@ def tracker():
 							  'January Losses': [31, 25, 30, 34, 29, 23, 34],
 							  'February Wins': [26, 30, 28, 20, 32, 34, 27],
 							  'February Losses': [30, 23, 27, 40, 26, 26, 25]
+							  'March Wins': [23, 31, 39, 14, 28, 30, 27],
+							  'March Losses': [29, 27, 15, 42, 25, 24, 28]
 							  })
 
 		# Create the wins table
@@ -273,12 +275,22 @@ def tracker():
 													   merged_wins['February Losses']), 3)
 		merged_wins['February Win Percentage'] = merged_wins['February Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['March Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins'] - merged_wins['January Wins'] -  merged_wins['February Wins'])/
+		merged_wins['March Win Percentage'] = round((merged_wins['March Wins']) /
+													   (merged_wins['March Wins'] +
+														merged_wins['March Losses']), 3)
+		merged_wins['March Win Percentage'] = merged_wins['March Win Percentage'].replace(np.nan, .000)
+
+
+		merged_wins['April Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['December Wins'] -
+													 merged_wins['January Wins'] -  merged_wins['February Wins'] -
+													 merged_wins['March Wins'])/
 											  (merged_wins['Total Wins'] - merged_wins['December Wins'] -
 											   merged_wins['January Wins'] - merged_wins['February Wins'] +
+											   merged_wins['March Wins'] +
 											   merged_wins['Total Losses'] - merged_wins['December Losses'] -
-											   merged_wins['January Losses'] - merged_wins['February Losses']), 3)
-		merged_wins['March Win Percentage'] = merged_wins['March Win Percentage'] .replace(np.nan, .000)
+											   merged_wins['January Losses'] - merged_wins['February Losses'] -
+											   merged_wins['March Losses']), 3)
+		merged_wins['April Win Percentage'] = merged_wins['April Win Percentage'] .replace(np.nan, .000)
 
 		teams_standings = pd.DataFrame({'Team Name': ['Team Nebeyu',
 													  'They all start with 0 wins',
@@ -297,9 +309,11 @@ def tracker():
 										'December Win %': merged_wins['December Win Percentage'],
 										'January Win %': merged_wins['January Win Percentage'],
 										'February Win %': merged_wins['February Win Percentage'],
-										'March Win %': merged_wins['March Win Percentage']})
+										'March Win %': merged_wins['March Win Percentage'],
+										'April Win %': merged_wins['April Win Percentage']
+										})
 
-		teams_standings = teams_standings.sort_values(by=['March Win %'], ascending=False)
+		teams_standings = teams_standings.sort_values(by=['April Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
 
 		return render_template('tracker_table.html',  team1_data = teams_standings.iloc[0].values,
