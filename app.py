@@ -236,7 +236,7 @@ def tracker():
 							  'January Wins': [30, 32, 32, 25, 28, 34, 27],
 							  'January Losses': [31, 25, 30, 34, 29, 23, 34],
 							  'February Wins': [26, 30, 28, 20, 32, 34, 27],
-							  'February Losses': [30, 23, 27, 40, 26, 26, 25]
+							  'February Losses': [30, 23, 27, 40, 26, 26, 25],
 							  'March Wins': [23, 31, 39, 14, 28, 30, 27],
 							  'March Losses': [29, 27, 15, 42, 25, 24, 28]
 							  })
