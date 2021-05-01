@@ -55,9 +55,9 @@ def home():
 	#Add necessary columns to standings
 	standings_df = western_conf_df.append(eastern_conf_df)
 
-	#standings_df['Team'] = standings_df['Team'].str.extract('(.*)[(]')
 	standings_df['Team'] = standings_df['Team'].astype(str)
 	standings_df['Team'] = standings_df['Team'].str.replace("\([0-9]+\)", "")
+	standings_df['Team'] = standings_df['Team'].str.replace("*", "")
 	standings_df['Team'] = standings_df['Team'].str.strip()
 
 	standings_df['W'] = standings_df['W'].replace(np.nan, 0)
@@ -65,6 +65,7 @@ def home():
 	standings_df['W'] = standings_df["W"].round().astype(int)
 	standings_df['L'] = standings_df["L"].round().astype(int)
 	standings_df["Record"] = standings_df['W'].map(str) + "-" + standings_df['L'].map(str)
+	print(standings_df)
 
 	# Set up the teams
 	teams = pd.DataFrame({'Team Name': ['Team Nebeyu', 
@@ -194,9 +195,9 @@ def tracker():
 		# Add necessary columns to standings
 		standings_df = western_conf_df.append(eastern_conf_df)
 
-		# standings_df['Team'] = standings_df['Team'].str.extract('(.*)[(]')
 		standings_df['Team'] = standings_df['Team'].astype(str)
 		standings_df['Team'] = standings_df['Team'].str.replace("\([0-9]+\)", "")
+		standings_df['Team'] = standings_df['Team'].str.replace("*", "")
 		standings_df['Team'] = standings_df['Team'].str.strip()
 
 		standings_df['W'] = standings_df['W'].replace(np.nan, 0)
@@ -238,7 +239,7 @@ def tracker():
 							  'February Wins': [26, 30, 28, 20, 32, 34, 27],
 							  'February Losses': [30, 23, 27, 40, 26, 26, 25],
 							  'March Wins': [23, 31, 39, 14, 28, 30, 27],
-							  'March Losses': [29, 27, 15, 42, 25, 24, 28]
+							  'March Losses': [29, 27, 15, 42, 25, 24, 28],
 							  })
 
 		# Create the wins table
