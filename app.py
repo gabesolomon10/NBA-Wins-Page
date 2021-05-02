@@ -293,7 +293,7 @@ def tracker():
 													 merged_wins['March Wins'] - merged_wins['April Wins'])/
 													((merged_wins['Total Wins'] - merged_wins['December Wins'] -
 													 merged_wins['January Wins'] -  merged_wins['February Wins'] -
-													 merged_wins['March Wins'] + merged_wins['April Wins'] +
+													 merged_wins['March Wins'] - merged_wins['April Wins'] +
 											   merged_wins['Total Losses'] - merged_wins['December Losses'] -
 											   merged_wins['January Losses'] - merged_wins['February Losses'] -
 											   merged_wins['March Losses'] - merged_wins['April Losses'])), 3)
