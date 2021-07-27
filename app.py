@@ -207,12 +207,12 @@ def tracker():
 
 		# Set up the teams
 		teams = pd.DataFrame({'Team Name': ['Team Nebeyu',
-											'They all start with 0 wins',
-											"Our friend is an alcoholic and it's troubling",
-											"Sammy Ps AF1s Est. 2011",
-											"Pre-pubescent toddler",
-											"Did it",
-											"Benjamin Bogdanovic"],
+											'Team Phil',
+											"Team Fitz",
+											"Team Cepehr",
+											"Team Gabe",
+											"Team Young",
+											"Team Ben"],
 							  'Owner': [os.path.join(app.config['profiles_folder'], 'nebeyu.png'),
 										os.path.join(app.config['profiles_folder'], 'phil.png'),
 										os.path.join(app.config['profiles_folder'], 'fitz.png'),
