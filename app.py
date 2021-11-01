@@ -224,8 +224,8 @@ def tracker():
                                      'Indiana Pacers', 'Toronto Raptors', 'Chicago Bulls','Memphis Grizzlies'],
 	                          'Team 4': ['Washington Wizards', 'Minnesota Timberwolves', 'San Antonio Spurs',
 						   			 'Detroit Pistons','Sacramento Kings', 'Houston Rockets', 'Cleveland Cavaliers'],
-							  'November Wins': [0,0,0,0,0,0,0],
-							  'November Losses': [0,0,0,0,0,0,0]
+							  'October Wins': [19,12,14,7,12,12,15],
+							  'October Losses': [6,12,10,18,12,13,11]
 							  })
 
 		# Create the wins table
@@ -247,10 +247,13 @@ def tracker():
 		merged_wins['Total Losses'] = merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] + \
 									merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']
 
-		merged_wins['November Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['November Wins'])/
-													((merged_wins['Total Wins'] - merged_wins['November Wins'] +
-													 (merged_wins['Total Losses'] - merged_wins['November Losses']))), 3)
-		merged_wins['November Win Percentage'] = merged_wins['November Win Percentage'] .replace(np.nan, .000)
+		merged_wins['October Win Percentage'] = round((merged_wins['October Wins']/(merged_wins['October Wins'] + merged_wins['October Losses'])), 3)
+		merged_wins['October Win Percentage'] = merged_wins['October Win Percentage'].replace(np.nan, .000)
+
+		merged_wins['November Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['October Wins'])/
+													((merged_wins['Total Wins'] - merged_wins['October Wins'] +
+													 (merged_wins['Total Losses'] - merged_wins['October Losses']))), 3)
+		merged_wins['November Win Percentage'] = merged_wins['November Win Percentage'].replace(np.nan, .000)
 
 		print(merged_wins)
 
@@ -268,6 +271,7 @@ def tracker():
 												  os.path.join(app.config['profiles_folder'], 'gabe.png'),
 												  os.path.join(app.config['profiles_folder'], 'young.png'),
 												  os.path.join(app.config['profiles_folder'], 'ben.png')],
+										'October Win %': merged_wins['October Win Percentage'],
 										'November Win %': merged_wins['November Win Percentage'],
 										})
 

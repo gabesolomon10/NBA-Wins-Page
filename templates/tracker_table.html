@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" >
   
 <link rel='icon' href="{{ url_for('static', filename='nba_logos/favicon.ico') }}" type='image/x-icon' />
@@ -22,6 +22,7 @@
             <tr>
               <th>Team Name</th>
               <th>Owner</th>
+              <th>October Win %</th>
               <th>November Win %</th>
               <th style="width: 75px;"></th>
             </tr>
@@ -32,6 +33,7 @@
               <td>{{team1_data[0]}}</td>
               <td><img class="profile" src="{{team1_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
               <td>{{team1_data[2]}}</td>
+              <td>{{team1_data[3]}}</td>
 
             </tr>
 
@@ -40,6 +42,7 @@
              <td>{{team2_data[0]}}</td>
               <td><img class="profile" src="{{team2_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
               <td>{{team2_data[2]}}</td>
+              <td>{{team2_data[3]}}</td>
 
             </tr>
 
@@ -48,6 +51,7 @@
               <td>{{team3_data[0]}}</td>
               <td><img class="profile" src="{{team3_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
               <td>{{team3_data[2]}}</td>
+              <td>{{team3_data[3]}}</td>
 
             </tr>
 
@@ -56,6 +60,7 @@
               <td>{{team4_data[0]}}</td>
               <td><img class="profile" src="{{team4_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
               <td>{{team4_data[2]}}</td>
+              <td>{{team4_data[3]}}</td>
 
             </tr>
 
@@ -64,6 +69,7 @@
               <td>{{team5_data[0]}}</td>
               <td><img class="profile" src="{{team5_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
               <td>{{team5_data[2]}}</td>
+              <td>{{team5_data[3]}}</td>
             </tr>
 
              <tr>
@@ -71,6 +77,7 @@
               <td>{{team6_data[0]}}</td>
               <td><img class="profile" src="{{team6_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
               <td>{{team6_data[2]}}</td>
+              <td>{{team6_data[3]}}</td>
 
             </tr>
 
@@ -79,6 +86,7 @@
               <td>{{team7_data[0]}}</td>
               <td><img class="profile" src="{{team7_data[1]}}" alt="" height=100 width=100 border-radius=50%></img></td>
               <td>{{team7_data[2]}}</td>
+              <td>{{team7_data[3]}}</td>
 
             </tr>
 
