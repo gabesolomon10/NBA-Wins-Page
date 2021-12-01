@@ -225,7 +225,9 @@ def tracker():
 	                          'Team 4': ['Washington Wizards', 'Minnesota Timberwolves', 'San Antonio Spurs',
 						   			 'Detroit Pistons','Sacramento Kings', 'Houston Rockets', 'Cleveland Cavaliers'],
 							  'October Wins': [19,12,14,7,12,12,15],
-							  'October Losses': [6,12,10,18,12,13,11]
+							  'October Losses': [6,12,10,18,12,13,11],
+							  'November Wins': [35,26,28,32,34,30,32],
+							  'November Losses': [24,35,30,29,28,30,28]
 							  })
 
 		# Create the wins table
@@ -250,10 +252,13 @@ def tracker():
 		merged_wins['October Win Percentage'] = round((merged_wins['October Wins']/(merged_wins['October Wins'] + merged_wins['October Losses'])), 3)
 		merged_wins['October Win Percentage'] = merged_wins['October Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['November Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['October Wins'])/
-													((merged_wins['Total Wins'] - merged_wins['October Wins'] +
-													 (merged_wins['Total Losses'] - merged_wins['October Losses']))), 3)
+		merged_wins['November Win Percentage'] = round((merged_wins['November Wins']/(merged_wins['November Wins'] + merged_wins['November Losses'])), 3)
 		merged_wins['November Win Percentage'] = merged_wins['November Win Percentage'].replace(np.nan, .000)
+
+		merged_wins['December Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['October Wins'] - merged_wins['November Wins'])/
+													((merged_wins['Total Wins'] - merged_wins['October Wins'] - merged_wins['November Wins'] +
+													 (merged_wins['Total Losses'] - merged_wins['October Losses'] - merged_wins['November Losses']))), 3)
+		merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
 
 		print(merged_wins)
 
@@ -273,9 +278,10 @@ def tracker():
 												  os.path.join(app.config['profiles_folder'], 'ben.png')],
 										'October Win %': merged_wins['October Win Percentage'],
 										'November Win %': merged_wins['November Win Percentage'],
+										'December Win %': merged_wins['December Win Percentage'],
 										})
 
-		teams_standings = teams_standings.sort_values(by=['November Win %'], ascending=False)
+		teams_standings = teams_standings.sort_values(by=['December Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
 
 
