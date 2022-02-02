@@ -13,7 +13,6 @@ import pandas as pd
 import numpy as np
 import wget
 import os
-import lxml
 
 #Set folder paths
 logos_folder = os.path.join('static', 'nba_logos')
