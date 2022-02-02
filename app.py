@@ -89,6 +89,8 @@ def home():
 	                      'Team 4': ['Washington Wizards', 'Minnesota Timberwolves', 'San Antonio Spurs',
 						   			 'Detroit Pistons','Sacramento Kings', 'Houston Rockets', 'Cleveland Cavaliers']})
 
+	
+
 	#Create the wins table
 	merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
 	merged_wins = merged_wins.rename(columns={"W": 'Team 1 Wins', 'L': 'Team 1 Losses', "Record": "Team 1 Record"})
