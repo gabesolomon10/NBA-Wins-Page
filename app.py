@@ -299,7 +299,7 @@ def tracker():
 										'February Win %': merged_wins['February Win Percentage']
 										})
 
-		teams_standings = teams_standings.sort_values(by=['January Win %'], ascending=False)
+		teams_standings = teams_standings.sort_values(by=['February Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
 
 
