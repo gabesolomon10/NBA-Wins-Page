@@ -17,7 +17,7 @@ ImageScraper==2.0.7
 itsdangerous==2.0.1
 Jinja2==3.0.3
 kiwisolver==1.3.2
-lxml==4.7.1
+lxml==4.9.1
 MarkupSafe==2.0.1
 matplotlib==3.5.1
 numpy==1.22.1
