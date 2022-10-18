@@ -164,7 +164,7 @@ def tracker():
 		# Get current wins
 
 		# Scrape standings from basketball-reference
-		stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2022.html')
+		stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2023.html')
 		content = stats_page.content
 		soup = BeautifulSoup(content, 'html.parser')
 
@@ -184,8 +184,8 @@ def tracker():
 		standings_df = pd.concat([western_conf_df, eastern_conf_df])
 
 		standings_df['Team'] = standings_df['Team'].astype(str)
-		standings_df['Team'] = standings_df['Team'].str.replace("\([0-9]+\)", "")
-		standings_df['Team'] = standings_df['Team'].str.replace("*", "")
+		standings_df['Team'] = standings_df['Team'].str.replace("\([0-9]+\)", "", regex=True)
+		standings_df['Team'] = standings_df['Team'].str.replace("*", "", regex=True)
 		standings_df['Team'] = standings_df['Team'].str.strip()
 
 		standings_df['W'] = standings_df['W'].replace(np.nan, 0)
