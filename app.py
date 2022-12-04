@@ -217,8 +217,8 @@ def tracker():
                                      'Sacramento Kings', 'Cleveland Cavaliers', 'New Orleans Pelicans','Chicago Bulls'],
 	                      'Team 4': ['Washington Wizards', 'Detroit Pistons', 'Houston Rockets',
 						   			 'Charlotte Hornets', 'Indiana Pacers', 'Utah Jazz', 'Orlando Magic'],
-						  'October Wins': [15,12,12,11,15,16,12],
-						  'October Losses': [12,16,15,16,13,11,16],
+						  'October Wins': [15,12,12,11,16,16,12],
+						  'October Losses': [12,16,15,16,11,11,16],
 						  'November Wins': [33,27,28,28,39,33,27],
 						  'November Losses': [27,35,28,29,20,28,31]})
 
