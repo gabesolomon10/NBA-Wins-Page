@@ -216,8 +216,11 @@ def tracker():
 	                      'Team 3': ['New York Knicks', 'Portland Trail Blazers', 'Los Angeles Lakers',
                                      'Sacramento Kings', 'Cleveland Cavaliers', 'New Orleans Pelicans','Chicago Bulls'],
 	                      'Team 4': ['Washington Wizards', 'Detroit Pistons', 'Houston Rockets',
-						   			 'Charlotte Hornets', 'Indiana Pacers', 'Utah Jazz', 'Orlando Magic']
-							  })
+						   			 'Charlotte Hornets', 'Indiana Pacers', 'Utah Jazz', 'Orlando Magic'],
+						  'October Wins': [15,12,12,11,15,16,12],
+						  'October Losses': [12,16,15,16,13,11,16],
+						  'November Wins': [33,27,28,28,39,33,27],
+						  'November Losses': [27,35,28,29,20,28,31]})
 
 		# Create the wins table
 		merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
@@ -238,14 +241,17 @@ def tracker():
 		merged_wins['Total Losses'] = merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] + \
 									merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']
 
-		merged_wins['October Win Percentage'] = round((merged_wins['Total Wins']/(merged_wins['Total Wins'] + merged_wins['Total Losses'])), 3)
+		merged_wins['October Win Percentage'] = round((merged_wins['October Wins']/(merged_wins['October Wins'] + merged_wins['October Losses'])), 3)
 		merged_wins['October Win Percentage'] = merged_wins['October Win Percentage'].replace(np.nan, .000)
 
-		# merged_wins['November Win Percentage'] = round((merged_wins['November Wins']/(merged_wins['November Wins'] + merged_wins['November Losses'])), 3)
-		# merged_wins['November Win Percentage'] = merged_wins['November Win Percentage'].replace(np.nan, .000)
+		merged_wins['November Win Percentage'] = round((merged_wins['November Wins']/(merged_wins['November Wins'] + merged_wins['November Losses'])), 3)
+		merged_wins['November Win Percentage'] = merged_wins['November Win Percentage'].replace(np.nan, .000)
 
-		# merged_wins['December Win Percentage'] = round((merged_wins['December Wins']/(merged_wins['December Wins'] + merged_wins['December Losses'])), 3)
-		# merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
+		merged_wins['December Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['October Wins'] - 
+			merged_wins['November Wins'])/((merged_wins['Total Wins'] - merged_wins['October Wins'] - merged_wins['November Wins'] +
+													 (merged_wins['Total Losses'] - merged_wins['October Losses'] - 
+													 	merged_wins['November Losses']))), 3)
+		merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
 
 		# merged_wins['January Win Percentage'] = round((merged_wins['January Wins']/(merged_wins['January Wins'] + merged_wins['January Losses'])), 3)
 		# merged_wins['January Win Percentage'] = merged_wins['January Win Percentage'].replace(np.nan, .000)
@@ -280,16 +286,16 @@ def tracker():
 												  os.path.join(app.config['profiles_folder'], 'gabe.png'),
 												  os.path.join(app.config['profiles_folder'], 'young.png'),
 												  os.path.join(app.config['profiles_folder'], 'ben.png')],
-										'October Win %': merged_wins['October Win Percentage']
-										# 'November Win %': merged_wins['November Win Percentage'],
-										# 'December Win %': merged_wins['December Win Percentage'],
+										'October Win %': merged_wins['October Win Percentage'],
+										'November Win %': merged_wins['November Win Percentage'],
+										'December Win %': merged_wins['December Win Percentage']
 										# 'January Win %': merged_wins['January Win Percentage'],
 										# 'February Win %': merged_wins['February Win Percentage'],
 										# 'March Win %': merged_wins['March Win Percentage'],
 										# 'April Win %': merged_wins['April Win Percentage']
 										})
 
-		teams_standings = teams_standings.sort_values(by=['October Win %'], ascending=False)
+		teams_standings = teams_standings.sort_values(by=['November Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
 
 
