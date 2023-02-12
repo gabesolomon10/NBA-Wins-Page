@@ -222,7 +222,9 @@ def tracker():
 						  'November Wins': [33,27,28,28,39,33,27],
 						  'November Losses': [27,35,28,29,20,28,31],
 						  'December Wins': [28,32,25,31,30,35,29],
-						  'December Losses': [31,25,35,28,30,27,30]})
+						  'December Losses': [31,25,35,28,30,27,30],
+						  'January Wins': [34,23,30,34,29,24,37],
+						  'January Losses': [23,32,31,26,33,36,23]})
 
 		# Create the wins table
 		merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
@@ -252,12 +254,16 @@ def tracker():
 		merged_wins['December Win Percentage'] = round((merged_wins['December Wins']/(merged_wins['December Wins'] + merged_wins['December Losses'])), 3)
 		merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['January Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['October Wins'] - 
-			merged_wins['November Wins'] - merged_wins['December Wins'])/((merged_wins['Total Wins'] - merged_wins['October Wins'] - merged_wins['November Wins']
-													- merged_wins['December Wins'] +
-													 (merged_wins['Total Losses'] - merged_wins['October Losses'] - 
-													 	merged_wins['November Losses'] - merged_wins['December Losses']))), 3)
+		merged_wins['January Win Percentage'] = round((merged_wins['January Wins']/(merged_wins['January Wins'] + merged_wins['January Losses'])), 3)
 		merged_wins['January Win Percentage'] = merged_wins['January Win Percentage'].replace(np.nan, .000)
+
+		merged_wins['February Win Percentage'] = round((merged_wins['Total Wins'] - merged_wins['October Wins'] - 
+			merged_wins['November Wins'] - merged_wins['December Wins'] - merged_wins['January Wins'])/
+			((merged_wins['Total Wins'] - merged_wins['October Wins'] - merged_wins['November Wins']
+				- merged_wins['December Wins'] - merged_wins['January Wins'] - 
+				(merged_wins['Total Losses'] - merged_wins['October Losses'] - 
+				  merged_wins['November Losses'] - merged_wins['December Losses'] - merged_wins['January Losses']))), 3)
+		merged_wins['February Win Percentage'] = merged_wins['February Win Percentage'].replace(np.nan, .000)
 
 		# merged_wins['January Win Percentage'] = round((merged_wins['January Wins']/(merged_wins['January Wins'] + merged_wins['January Losses'])), 3)
 		# merged_wins['January Win Percentage'] = merged_wins['January Win Percentage'].replace(np.nan, .000)
@@ -295,8 +301,8 @@ def tracker():
 										'October Win %': merged_wins['October Win Percentage'],
 										'November Win %': merged_wins['November Win Percentage'],
 										'December Win %': merged_wins['December Win Percentage'],
-										'January Win %': merged_wins['January Win Percentage']
-										# 'February Win %': merged_wins['February Win Percentage'],
+										'January Win %': merged_wins['January Win Percentage'],
+										'February Win %': merged_wins['February Win Percentage'],
 										# 'March Win %': merged_wins['March Win Percentage'],
 										# 'April Win %': merged_wins['April Win Percentage']
 										})
