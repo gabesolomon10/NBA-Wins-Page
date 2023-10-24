@@ -10,7 +10,6 @@ from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 #Caching imports
 from flask_caching import Cache
-import io
 
 #Set folder paths
 logos_folder = os.path.join('static', 'nba_logos')
@@ -40,8 +39,8 @@ def home():
 	western_str = str(western_conf)
 	eastern_str = str(eastern_conf)
 
-	western_conf_df = pd.read_html(io.StringIO(western_str))[0]
-	eastern_conf_df = pd.read_html(io.StringIO(eastern_str))[0]
+	western_conf_df = pd.read_html(western_str)[0]
+	eastern_conf_df = pd.read_html(eastern_str)[0]
 
 	western_conf_df = western_conf_df.rename(columns={"Western Conference": "Team"})
 	eastern_conf_df = eastern_conf_df.rename(columns={"Eastern Conference": "Team"})
@@ -51,7 +50,7 @@ def home():
 
 	standings_df['Team'] = standings_df['Team'].astype(str)
 	standings_df['Team'] = standings_df['Team'].str.replace("\([0-9]+\)", "", regex=True)
-	standings_df['Team'] = standings_df['Team'].str.replace("\*", "", regex=True)
+	standings_df['Team'] = standings_df['Team'].str.replace("*", "", regex=True)
 	standings_df['Team'] = standings_df['Team'].str.strip()
 
 	standings_df['W'] = standings_df['W'].replace(np.nan, 0)
@@ -89,29 +88,17 @@ def home():
 										 'San Antonio Spurs', 'Houston Rockets', 'Portland Trail Blazers']})
 
 	#Create the wins table
-	cols_to_use = ['W', 'L', 'Record', 'Team']
-
-	merged_wins = teams.merge(standings_df[cols_to_use], left_on='Team 1', right_on='Team')
+	merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
 	merged_wins = merged_wins.rename(columns={"W": 'Team 1 Wins', 'L': 'Team 1 Losses', "Record": "Team 1 Record"})
 
-	columns_to_drop = [col for col in merged_wins.columns if col.endswith(('_x', '_y')) or col == 'Team']
-	# Drop these columns
-	merged_wins = merged_wins.drop(columns=columns_to_drop)
-
-	merged_wins = merged_wins.merge(standings_df[cols_to_use], left_on='Team 2', right_on='Team')
+	merged_wins = merged_wins.merge(standings_df, left_on='Team 2', right_on='Team')
 	merged_wins = merged_wins.rename(columns={"W": 'Team 2 Wins', 'L': 'Team 2 Losses', "Record": "Team 2 Record"})
-	# Drop these columns
-	merged_wins = merged_wins.drop(columns=columns_to_drop)
 
-	merged_wins = merged_wins.merge(standings_df[cols_to_use], left_on='Team 3', right_on='Team')
+	merged_wins = merged_wins.merge(standings_df, left_on='Team 3', right_on='Team')
 	merged_wins = merged_wins.rename(columns={"W": 'Team 3 Wins', 'L': 'Team 3 Losses', "Record": "Team 3 Record"})
-	# Drop these columns
-	merged_wins = merged_wins.drop(columns=columns_to_drop)
 
-	merged_wins = merged_wins.merge(standings_df[cols_to_use], left_on='Team 4', right_on='Team')
+	merged_wins = merged_wins.merge(standings_df, left_on='Team 4', right_on='Team')
 	merged_wins = merged_wins.rename(columns={"W": 'Team 4 Wins', 'L': 'Team 4 Losses', "Record": "Team 4 Record"})
-	# Drop these columns
-	merged_wins = merged_wins.drop(columns=columns_to_drop)
 
 	merged_wins['Total Wins'] = merged_wins['Team 1 Wins'] + merged_wins['Team 2 Wins'] + \
 								merged_wins['Team 3 Wins'] + merged_wins['Team 4 Wins']
@@ -133,7 +120,7 @@ def home():
 								   os.path.join(app.config['nba_folder'],'celtics.png'),
 								   os.path.join(app.config['nba_folder'],'suns.png'),
 								   os.path.join(app.config['nba_folder'],'bucks.png'),
-								   os.path.join(app.config['nba_folder'],'76ers.png'),
+								   os.path.join(app.config['nba_folder'],'sixers.png'),
 								   os.path.join(app.config['nba_folder'],'nuggets.png')]
 
 	merged_wins['Team 2 Image'] = [os.path.join(app.config['nba_folder'],'lakers.png'),
@@ -158,7 +145,7 @@ def home():
 								   os.path.join(app.config['nba_folder'],'jazz.png'),
 								   os.path.join(app.config['nba_folder'],'spurs.png'),
 								   os.path.join(app.config['nba_folder'],'rockets.png'),
-								   os.path.join(app.config['nba_folder'],'trail_blazers.png')]
+								   os.path.join(app.config['nba_folder'],'blazers.png')]
 
 	merged_wins = merged_wins.sort_values(by=['Total Wins', 'Win Percentage'], ascending = False)
 	merged_wins.reset_index(drop=True, inplace=True)
@@ -191,8 +178,8 @@ def tracker():
 		western_str = str(western_conf)
 		eastern_str = str(eastern_conf)
 
-		western_conf_df = pd.read_html(io.StringIO(western_str))[0]
-		eastern_conf_df = pd.read_html(io.StringIO(eastern_str))[0]
+		western_conf_df = pd.read_html(western_str)[0]
+		eastern_conf_df = pd.read_html(eastern_str)[0]
 
 		western_conf_df = western_conf_df.rename(columns={"Western Conference": "Team"})
 		eastern_conf_df = eastern_conf_df.rename(columns={"Eastern Conference": "Team"})
@@ -202,7 +189,7 @@ def tracker():
 
 		standings_df['Team'] = standings_df['Team'].astype(str)
 		standings_df['Team'] = standings_df['Team'].str.replace("\([0-9]+\)", "", regex=True)
-		standings_df['Team'] = standings_df['Team'].str.replace("\*", "", regex=True)
+		standings_df['Team'] = standings_df['Team'].str.replace("*", "", regex=True)
 		standings_df['Team'] = standings_df['Team'].str.strip()
 
 		standings_df['W'] = standings_df['W'].replace(np.nan, 0)
@@ -238,8 +225,8 @@ def tracker():
 							  'Team 4': ['Toronto Raptors', 'Orlando Magic',	
 										 'Charlotte Hornets', 'Utah Jazz',
 										 'San Antonio Spurs', 'Houston Rockets', 'Portland Trail Blazers'],
-						#   'October Wins': [15,12,12,11,16,16,12],
-						#   'October Losses': [12,16,15,16,11,11,16],
+						  'October Wins': [15,12,12,11,16,16,12],
+						  'October Losses': [12,16,15,16,11,11,16],
 						#   'November Wins': [33,27,28,28,39,33,27],
 						#   'November Losses': [27,35,28,29,20,28,31],
 						#   'December Wins': [28,32,25,31,30,35,29],
@@ -253,40 +240,23 @@ def tracker():
 						  })
 
 		# Create the wins table
-	#Create the wins table
-		cols_to_use = ['W', 'L', 'Record', 'Team']
-
-		merged_wins = teams.merge(standings_df[cols_to_use], left_on='Team 1', right_on='Team')
+		merged_wins = teams.merge(standings_df, left_on='Team 1', right_on='Team')
 		merged_wins = merged_wins.rename(columns={"W": 'Team 1 Wins', 'L': 'Team 1 Losses', "Record": "Team 1 Record"})
 
-		columns_to_drop = [col for col in merged_wins.columns if col.endswith(('_x', '_y')) or col == 'Team']
-		# Drop these columns
-		merged_wins = merged_wins.drop(columns=columns_to_drop)
-
-		merged_wins = merged_wins.merge(standings_df[cols_to_use], left_on='Team 2', right_on='Team')
+		merged_wins = merged_wins.merge(standings_df, left_on='Team 2', right_on='Team')
 		merged_wins = merged_wins.rename(columns={"W": 'Team 2 Wins', 'L': 'Team 2 Losses', "Record": "Team 2 Record"})
-		# Drop these columns
-		merged_wins = merged_wins.drop(columns=columns_to_drop)
 
-		merged_wins = merged_wins.merge(standings_df[cols_to_use], left_on='Team 3', right_on='Team')
+		merged_wins = merged_wins.merge(standings_df, left_on='Team 3', right_on='Team')
 		merged_wins = merged_wins.rename(columns={"W": 'Team 3 Wins', 'L': 'Team 3 Losses', "Record": "Team 3 Record"})
-		# Drop these columns
-		merged_wins = merged_wins.drop(columns=columns_to_drop)
 
-		merged_wins = merged_wins.merge(standings_df[cols_to_use], left_on='Team 4', right_on='Team')
+		merged_wins = merged_wins.merge(standings_df, left_on='Team 4', right_on='Team')
 		merged_wins = merged_wins.rename(columns={"W": 'Team 4 Wins', 'L': 'Team 4 Losses', "Record": "Team 4 Record"})
-		# Drop these columns
-		merged_wins = merged_wins.drop(columns=columns_to_drop)
 
 		merged_wins['Total Wins'] = merged_wins['Team 1 Wins'] + merged_wins['Team 2 Wins'] + \
 									merged_wins['Team 3 Wins'] + merged_wins['Team 4 Wins']
 
 		merged_wins['Total Losses'] = merged_wins['Team 1 Losses'] + merged_wins['Team 2 Losses'] + \
 									merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']
-		
-		# october wins are all we have right now
-		merged_wins['October Win Percentage'] = round((merged_wins['Total Wins']/(merged_wins['Total Wins'] + merged_wins['Total Losses'])), 3)
-		merged_wins['October Win Percentage'] = merged_wins['October Win Percentage'].replace(np.nan, .000)
 
 		# merged_wins['October Win Percentage'] = round((merged_wins['October Wins']/(merged_wins['October Wins'] + merged_wins['October Losses'])), 3)
 		# merged_wins['October Win Percentage'] = merged_wins['October Win Percentage'].replace(np.nan, .000)
@@ -327,7 +297,7 @@ def tracker():
 												  os.path.join(app.config['profiles_folder'], 'gabe.png'),
 												  os.path.join(app.config['profiles_folder'], 'young.png'),
 												  os.path.join(app.config['profiles_folder'], 'ben.png')],
-										'October Win %': merged_wins['October Win Percentage'],
+										# 'October Win %': merged_wins['October Win Percentage'],
 										# 'November Win %': merged_wins['November Win Percentage'],
 										# 'December Win %': merged_wins['December Win Percentage'],
 										# 'January Win %': merged_wins['January Win Percentage'],
@@ -336,7 +306,7 @@ def tracker():
 										# 'April Win %': merged_wins['April Win Percentage']
 										})
 
-		teams_standings = teams_standings.sort_values(by=['October Win %'], ascending=False)
+		teams_standings = teams_standings.sort_values(by=['March Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
 
 
