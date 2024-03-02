@@ -341,7 +341,7 @@ def tracker():
 										'December Win %': merged_wins['December Win Percentage'],
 										'January Win %': merged_wins['January Win Percentage'],
 										'February Win %': merged_wins['February Win Percentage'],
-										# 'March Win %': merged_wins['March Win Percentage'],
+										'March Win %': merged_wins['March Win Percentage'],
 										# 'April Win %': merged_wins['April Win Percentage']
 										})
 
