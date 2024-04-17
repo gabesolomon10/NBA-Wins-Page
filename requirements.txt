@@ -5,5 +5,5 @@ matplotlib==3.6.1
 numpy==1.22.3
 pandas==1.4.2
 requests==2.31.0
-gunicorn==20.1.0
+gunicorn==22.0.0
 lxml==4.9.1
