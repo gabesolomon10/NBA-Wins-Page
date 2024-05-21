@@ -4,6 +4,6 @@ Flask_Caching==2.0.1
 matplotlib==3.6.1
 numpy==1.22.3
 pandas==1.4.2
-requests==2.31.0
+requests==2.32.0
 gunicorn==22.0.0
 lxml==4.9.1
