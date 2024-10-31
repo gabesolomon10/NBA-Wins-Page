@@ -30,7 +30,7 @@ app.secret_key = 'a;sldks;js?##s;kasjjdfjd'
 def home():
 
 	#Scrape standings from basketball-reference
-	stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2024.html')
+	stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2025.html')
 	content = stats_page.content
 	soup = BeautifulSoup(content, 'html.parser')
 
@@ -75,18 +75,42 @@ def home():
 									os.path.join(app.config['profiles_folder'],'gabe.png'),
 									os.path.join(app.config['profiles_folder'],'young.png'),
 									os.path.join(app.config['profiles_folder'],'ben.png')],
-	                      'Team 1': ['Golden State Warriors', 'Cleveland Cavaliers',
-								   		'Boston Celtics', 'Phoenix Suns',
-										'Milwaukee Bucks', 'Philadelphia 76ers', 'Denver Nuggets'],
-	                      'Team 2': ['Los Angeles Lakers', 'Los Angeles Clippers',
-                                     'New York Knicks', 'Oklahoma City Thunder',
-									 'Minnesota Timberwolves', 'Memphis Grizzlies', 'Sacramento Kings'],
-	                      'Team 3': ['Brooklyn Nets', 'Chicago Bulls',
-								  		 'New Orleans Pelicans', 'Indiana Pacers',
-										 'Atlanta Hawks', 'Miami Heat', 'Dallas Mavericks'],
-	                      'Team 4': ['Toronto Raptors', 'Orlando Magic',
-								  		 'Charlotte Hornets', 'Utah Jazz',
-										 'San Antonio Spurs', 'Houston Rockets', 'Portland Trail Blazers']})
+						   'Team 1': [
+            					'Boston Celtics',       # Nebeyu's Round 1		
+								'New York Knicks',      # Phil's Round 1
+								'Oklahoma City Thunder',# Fitz's Round 1		
+								'Denver Nuggets',       # Cepehr's Round 1
+								'Minnesota Timberwolves', # Gabe's Round 1
+								'Philadelphia 76ers',   # Young's Round 1
+								'Cleveland Cavaliers'   # Ben's Round 1
+							],
+							'Team 2': [
+								'Indiana Pacers',       # Nebeyu's Round 2
+								'Memphis Grizzlies',    # Phil's Round 2
+								'Sacramento Kings',     # Fitz's Round 2
+								'Dallas Mavericks',     # Cepehr's Round 2
+								'Orlando Magic',        # Gabe's Round 2
+								'Milwaukee Bucks',      # Young's Round 2
+								'Phoenix Suns'          # Ben's Round 2
+							],
+							'Team 3': [
+								'New Orleans Pelicans', # Nebeyu's Round 3
+								'Houston Rockets',      # Phil's Round 3
+								'Miami Heat',           # Fitz's Round 3
+								'Atlanta Hawks',        # Cepehr's Round 3
+								'Golden State Warriors',# Gabe's Round 3
+								'Los Angeles Lakers',   # Young's Round 3
+								'Toronto Raptors'       # Ben's Round 3
+							],
+							'Team 4': [
+								'Portland Trail Blazers', # Nebeyu's Round 4
+								'Los Angeles Clippers',   # Phil's Round 4
+								'Detroit Pistons',        # Fitz's Round 4
+								'Chicago Bulls',          # Cepehr's Round 4
+								'Charlotte Hornets',      # Gabe's Round 4
+								'San Antonio Spurs',      # Young's Round 4
+								'Utah Jazz'               # Ben's Round 4
+							]})
 
 	#Create the wins table
 	cols_to_use = ['W', 'L', 'Record', 'Team']
@@ -127,38 +151,38 @@ def home():
 							   'Team 3', 'Team 3 Record',
 							   'Team 4',  'Team 4 Record']]
 
-	#NBA Logos
-	merged_wins['Team 1 Image'] = [os.path.join(app.config['nba_folder'],'warriors.png'),
-								   os.path.join(app.config['nba_folder'],'cavaliers.png'),
-								   os.path.join(app.config['nba_folder'],'celtics.png'),
-								   os.path.join(app.config['nba_folder'],'suns.png'),
-								   os.path.join(app.config['nba_folder'],'bucks.png'),
-								   os.path.join(app.config['nba_folder'],'76ers.png'),
-								   os.path.join(app.config['nba_folder'],'nuggets.png')]
-
-	merged_wins['Team 2 Image'] = [os.path.join(app.config['nba_folder'],'lakers.png'),
-								   os.path.join(app.config['nba_folder'],'clippers.png'),
+	#NBA Logos - Ordered by Team Name
+	merged_wins['Team 1 Image'] = [os.path.join(app.config['nba_folder'],'celtics.png'),
 								   os.path.join(app.config['nba_folder'],'knicks.png'),
-								   os.path.join(app.config['nba_folder'],'thunder.png'),
+								   os.path.join(app.config['nba_folder'],'thunder.png'), 
+								   os.path.join(app.config['nba_folder'],'nuggets.png'),
 								   os.path.join(app.config['nba_folder'],'timberwolves.png'),
-								   os.path.join(app.config['nba_folder'],'grizzlies.png'),
-								   os.path.join(app.config['nba_folder'],'kings.png')]
-
-	merged_wins['Team 3 Image'] = [os.path.join(app.config['nba_folder'],'nets.png'),
-								   os.path.join(app.config['nba_folder'],'bulls.png'),
-								   os.path.join(app.config['nba_folder'],'pelicans.png'),
-								   os.path.join(app.config['nba_folder'],'pacers.png'),
-								   os.path.join(app.config['nba_folder'],'hawks.png'),
-								   os.path.join(app.config['nba_folder'],'heat.png'),
-								   os.path.join(app.config['nba_folder'],'mavericks.png')]
-
-	merged_wins['Team 4 Image'] = [os.path.join(app.config['nba_folder'],'raptors.png'),
+								   os.path.join(app.config['nba_folder'],'76ers.png'),
+								   os.path.join(app.config['nba_folder'],'cavaliers.png')]
+	
+	merged_wins['Team 2 Image'] = [os.path.join(app.config['nba_folder'],'pacers.png'),
+								   os.path.join(app.config['nba_folder'],'grizzlies.png'), 
+								   os.path.join(app.config['nba_folder'],'kings.png'),
+								   os.path.join(app.config['nba_folder'],'mavericks.png'),
 								   os.path.join(app.config['nba_folder'],'magic.png'),
-								   os.path.join(app.config['nba_folder'],'hornets.png'),
-								   os.path.join(app.config['nba_folder'],'jazz.png'),
-								   os.path.join(app.config['nba_folder'],'spurs.png'),
+								   os.path.join(app.config['nba_folder'],'bucks.png'),
+								   os.path.join(app.config['nba_folder'],'suns.png')]
+
+	merged_wins['Team 3 Image'] = [os.path.join(app.config['nba_folder'],'pelicans.png'),
 								   os.path.join(app.config['nba_folder'],'rockets.png'),
-								   os.path.join(app.config['nba_folder'],'trail_blazers.png')]
+								   os.path.join(app.config['nba_folder'],'heat.png'),
+								   os.path.join(app.config['nba_folder'],'hawks.png'),
+								   os.path.join(app.config['nba_folder'],'warriors.png'),
+								   os.path.join(app.config['nba_folder'],'lakers.png'),
+								   os.path.join(app.config['nba_folder'],'raptors.png')]
+
+	merged_wins['Team 4 Image'] = [os.path.join(app.config['nba_folder'],'trail_blazers.png'),
+								   os.path.join(app.config['nba_folder'],'clippers.png'),
+								   os.path.join(app.config['nba_folder'],'pistons.png'),
+								   os.path.join(app.config['nba_folder'],'bulls.png'),
+								   os.path.join(app.config['nba_folder'],'hornets.png'),
+								   os.path.join(app.config['nba_folder'],'spurs.png'),
+								   os.path.join(app.config['nba_folder'],'jazz.png')]
 
 	merged_wins = merged_wins.sort_values(by=['Total Wins', 'Win Percentage'], ascending = False)
 	merged_wins.reset_index(drop=True, inplace=True)
@@ -181,7 +205,7 @@ def tracker():
 		# Get current wins
 
 		# Scrape standings from basketball-reference
-		stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2024.html')
+		stats_page = requests.get('https://www.basketball-reference.com/leagues/NBA_2025.html')
 		content = stats_page.content
 		soup = BeautifulSoup(content, 'html.parser')
 
@@ -226,34 +250,60 @@ def tracker():
 										os.path.join(app.config['profiles_folder'], 'gabe.png'),
 										os.path.join(app.config['profiles_folder'], 'young.png'),
 										os.path.join(app.config['profiles_folder'], 'ben.png')],
-							  'Team 1': ['Golden State Warriors', 'Cleveland Cavaliers',
-										 'Boston Celtics', 'Phoenix Suns',
-										 'Milwaukee Bucks', 'Philadelphia 76ers', 'Denver Nuggets'],
-							  'Team 2': ['Los Angeles Lakers', 'Los Angeles Clippers',
-										 'New York Knicks', 'Oklahoma City Thunder',
-										 'Minnesota Timberwolves', 'Memphis Grizzlies', 'Sacramento Kings'],
-							  'Team 3': ['Brooklyn Nets', 'Chicago Bulls',	
-										 'New Orleans Pelicans', 'Indiana Pacers',
-										 'Atlanta Hawks', 'Miami Heat', 'Dallas Mavericks'],		
-							  'Team 4': ['Toronto Raptors', 'Orlando Magic',	
-										 'Charlotte Hornets', 'Utah Jazz',
-										 'San Antonio Spurs', 'Houston Rockets', 'Portland Trail Blazers'],
-						  'October Wins': [7,8,8,8,7,3,10],
-						  'October Losses': [8,8,5,7,7,11,4],
-						  'November Wins': [31,29,33,30,32,32,30],
-						  'November Losses': [30,30,26,27,27,24,27],
-						  'December Wins': [21,34,28,32,27,31,30],
-						  'December Losses': [34,20,27,23,27,25,28],
-						  'January Wins': [21,37,36,42,30,28,31],
-						  'January Losses': [35,22,27,24,34,34,31],
-						  'February Wins': [29,29,26,25,23,17,22],
-						  'February Losses': [21,17,21,20,24,30,21],
-						  'March Wins': [25,34,34,29,31,32,36],
-						  'March Losses': [36,30,25,31,28,30,27]
+						  'Team 1': [
+								'Boston Celtics',       # Nebeyu's Round 1		
+								'New York Knicks',      # Phil's Round 1
+								'Oklahoma City Thunder',# Fitz's Round 1		
+								'Denver Nuggets',       # Cepehr's Round 1
+								'Minnesota Timberwolves', # Gabe's Round 1
+								'Philadelphia 76ers',   # Young's Round 1
+								'Cleveland Cavaliers'   # Ben's Round 1
+							],
+							'Team 2': [
+								'Indiana Pacers',       # Nebeyu's Round 2
+								'Memphis Grizzlies',    # Phil's Round 2
+								'Sacramento Kings',     # Fitz's Round 2
+								'Dallas Mavericks',     # Cepehr's Round 2
+								'Orlando Magic',        # Gabe's Round 2
+								'Milwaukee Bucks',      # Young's Round 2
+								'Phoenix Suns'          # Ben's Round 2
+							],
+							'Team 3': [
+								'New Orleans Pelicans', # Nebeyu's Round 3
+								'Houston Rockets',      # Phil's Round 3
+								'Miami Heat',           # Fitz's Round 3
+								'Atlanta Hawks',        # Cepehr's Round 3
+								'Golden State Warriors',# Gabe's Round 3
+								'Los Angeles Lakers',   # Young's Round 3
+								'Toronto Raptors'       # Ben's Round 3
+							],
+							'Team 4': [
+								'Portland Trail Blazers', # Nebeyu's Round 4
+								'Los Angeles Clippers',   # Phil's Round 4
+								'Detroit Pistons',        # Fitz's Round 4
+								'Chicago Bulls',          # Cepehr's Round 4
+								'Charlotte Hornets',      # Gabe's Round 4
+								'San Antonio Spurs',      # Young's Round 4
+								'Utah Jazz'               # Ben's Round 4
+							],
+							
+						#   'October Wins': [7,8,8,8,7,3,10],
+						#   'October Losses': [8,8,5,7,7,11,4],
+						#   'November Wins': [31,29,33,30,32,32,30],
+						#   'November Losses': [30,30,26,27,27,24,27],
+						#   'December Wins': [21,34,28,32,27,31,30],
+						#   'December Losses': [34,20,27,23,27,25,28],
+						#   'January Wins': [21,37,36,42,30,28,31],
+						#   'January Losses': [35,22,27,24,34,34,31],
+						#   'February Wins': [29,29,26,25,23,17,22],
+						#   'February Losses': [21,17,21,20,24,30,21],
+						#   'March Wins': [25,34,34,29,31,32,36],
+						#   'March Losses': [36,30,25,31,28,30,27]
 						  })
 
 		# Create the wins table
-	#Create the wins table
+		# October hasn't even happened yet, so roll all this back
+
 		cols_to_use = ['W', 'L', 'Record', 'Team']
 
 		merged_wins = teams.merge(standings_df[cols_to_use], left_on='Team 1', right_on='Team')
@@ -261,7 +311,7 @@ def tracker():
 
 		columns_to_drop = [col for col in merged_wins.columns if col.endswith(('_x', '_y')) or col == 'Team']
 		# Drop these columns
-		merged_wins = merged_wins.drop(columns=columns_to_drop)
+		merged_wins = merged_wins.drop(columns=columns_to_drop)		
 
 		merged_wins = merged_wins.merge(standings_df[cols_to_use], left_on='Team 2', right_on='Team')
 		merged_wins = merged_wins.rename(columns={"W": 'Team 2 Wins', 'L': 'Team 2 Losses', "Record": "Team 2 Record"})
@@ -285,32 +335,33 @@ def tracker():
 									merged_wins['Team 3 Losses'] + merged_wins['Team 4 Losses']
 		
 		# october wins are all we have right now
-		merged_wins['October Win Percentage'] = round((merged_wins['October Wins']/(merged_wins['October Wins'] + merged_wins['October Losses'])), 3)
+		merged_wins['October Win Percentage'] = round((merged_wins['Total Wins']/(merged_wins['Total Wins'] + merged_wins['Total Losses'])), 3)
+		print(merged_wins)
 		merged_wins['October Win Percentage'] = merged_wins['October Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['November Win Percentage'] = round((merged_wins['November Wins']/(merged_wins['November Wins'] + merged_wins['November Losses'])), 3)
-		merged_wins['November Win Percentage'] = merged_wins['November Win Percentage'].replace(np.nan, .000)
+		# merged_wins['November Win Percentage'] = round((merged_wins['November Wins']/(merged_wins['November Wins'] + merged_wins['November Losses'])), 3)
+		# merged_wins['November Win Percentage'] = merged_wins['November Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['December Win Percentage'] = round((merged_wins['December Wins']/(merged_wins['December Wins'] + merged_wins['December Losses'])), 3)
-		merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
+		# merged_wins['December Win Percentage'] = round((merged_wins['December Wins']/(merged_wins['December Wins'] + merged_wins['December Losses'])), 3)
+		# merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
 		
-		merged_wins['December Win Percentage'] = round((merged_wins['December Wins']/(merged_wins['December Wins'] + merged_wins['December Losses'])), 3)
-		merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
+		# merged_wins['December Win Percentage'] = round((merged_wins['December Wins']/(merged_wins['December Wins'] + merged_wins['December Losses'])), 3)
+		# merged_wins['December Win Percentage'] = merged_wins['December Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['January Win Percentage'] = round((merged_wins['January Wins']/(merged_wins['January Wins'] + merged_wins['January Losses'])), 3)
-		merged_wins['January Win Percentage'] = merged_wins['January Win Percentage'].replace(np.nan, .000)
+		# merged_wins['January Win Percentage'] = round((merged_wins['January Wins']/(merged_wins['January Wins'] + merged_wins['January Losses'])), 3)
+		# merged_wins['January Win Percentage'] = merged_wins['January Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['February Win Percentage'] = round((merged_wins['February Wins']/(merged_wins['February Wins'] + merged_wins['February Losses'])), 3)
-		merged_wins['February Win Percentage'] = merged_wins['February Win Percentage'].replace(np.nan, .000)
+		# merged_wins['February Win Percentage'] = round((merged_wins['February Wins']/(merged_wins['February Wins'] + merged_wins['February Losses'])), 3)
+		# merged_wins['February Win Percentage'] = merged_wins['February Win Percentage'].replace(np.nan, .000)
 
-		merged_wins['March Win Percentage'] = round((merged_wins['March Wins']/(merged_wins['March Wins'] + merged_wins['March Losses'])), 3)
-		merged_wins['March Win Percentage'] = merged_wins['March Win Percentage'].replace(np.nan, .000)
+		# merged_wins['March Win Percentage'] = round((merged_wins['March Wins']/(merged_wins['March Wins'] + merged_wins['March Losses'])), 3)
+		# merged_wins['March Win Percentage'] = merged_wins['March Win Percentage'].replace(np.nan, .000)
 		
-		april_wins = merged_wins['Total Wins'] - merged_wins['October Wins'] - merged_wins['November Wins'] - merged_wins['December Wins'] - merged_wins['January Wins'] - merged_wins['February Wins'] - merged_wins['March Wins']
-		april_losses = merged_wins['Total Losses'] - merged_wins['October Losses'] - merged_wins['November Losses'] - merged_wins['December Losses'] - merged_wins['January Losses'] - merged_wins['February Losses'] - merged_wins['March Losses']
+		# april_wins = merged_wins['Total Wins'] - merged_wins['October Wins'] - merged_wins['November Wins'] - merged_wins['December Wins'] - merged_wins['January Wins'] - merged_wins['February Wins'] - merged_wins['March Wins']
+		# april_losses = merged_wins['Total Losses'] - merged_wins['October Losses'] - merged_wins['November Losses'] - merged_wins['December Losses'] - merged_wins['January Losses'] - merged_wins['February Losses'] - merged_wins['March Losses']
 
-		merged_wins['April Win Percentage'] = round((april_wins/(april_wins + april_losses)), 3)
-		merged_wins['April Win Percentage'] = merged_wins['April Win Percentage'].replace(np.nan, .000)
+		# merged_wins['April Win Percentage'] = round((april_wins/(april_wins + april_losses)), 3)
+		# merged_wins['April Win Percentage'] = merged_wins['April Win Percentage'].replace(np.nan, .000)
 
 
 		teams_standings = pd.DataFrame({'Team Name': ['Team Nebeyu',
@@ -328,15 +379,9 @@ def tracker():
 												  os.path.join(app.config['profiles_folder'], 'young.png'),
 												  os.path.join(app.config['profiles_folder'], 'ben.png')],
 										'October Win %': merged_wins['October Win Percentage'],
-										'November Win %': merged_wins['November Win Percentage'],
-										'December Win %': merged_wins['December Win Percentage'],
-										'January Win %': merged_wins['January Win Percentage'],
-										'February Win %': merged_wins['February Win Percentage'],
-										'March Win %': merged_wins['March Win Percentage'],
-										'April Win %': merged_wins['April Win Percentage']
 										})
 
-		teams_standings = teams_standings.sort_values(by=['March Win %'], ascending=False)
+		teams_standings = teams_standings.sort_values(by=['October Win %'], ascending=False)
 		teams_standings.reset_index(drop=True, inplace=True)
 
 
